@@ -27,9 +27,14 @@ set tabstop=2 shiftwidth=2 expandtab
 unmap <C-X>
 map ; <Nop>
 map ' <Nop>
-:noremap ;' tabnext<CR>
-:noremap '; tabprev<CR>
+:noremap ;' :tabnext<CR>
+:noremap '; :tabprev<CR>
 :nnoremap cc :TSHighlightCapturesUnderCursor<CR>
+
+function! Start_New_Tab(path)
+	execute 'tabnew %:h/' . a:path
+endfunction
+:command! -nargs=1 TT :call Start_New_Tab(<f-args>)
 ]])
 
 function OrgImports(wait_ms)
