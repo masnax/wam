@@ -12,7 +12,7 @@ return require('packer').startup(function(use)
   use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
   use 'ray-x/lsp_signature.nvim'
   use {'ray-x/starry.nvim'}
-  use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
+  use {'masnax/navigator.lua', requires = {'masnax/guihua.lua', run = 'cd lua/fzy && make'}}
 
   -- Colorscheme
   use 'norcalli/nvim-colorizer.lua'

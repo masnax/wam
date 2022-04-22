@@ -70,10 +70,10 @@ require'navigator'.setup {
     }
   },
   keymaps = {
-    {key = '<Space><Space><Space>', func = "implementation()"},
+    {key = '<Space>', func = "require('navigator.def_impl').def_impl_sync()"},
     {key = '<Space><Space>', func = "require('navigator.reference').async_ref()"},
-    {key = '<Space>', func = "require('navigator.definition').definition_preview()"},
-    {key = '<Space>x', func = "require('navigator.definition').definition()"},
+--    {key = '<Space>', func = "require('navigator.definition').definition_preview()"},
+--    {key = '<Space>x', func = "require('navigator.definition').definition()"},
     {key = '[e', func = "diagnostic.goto_next({ border = 'rounded', max_width = 80})"},
     {key = ']e', func = "diagnostic.goto_prev({ border = 'rounded', max_width = 80})"},
     {key = '[r', func = "require('navigator.treesitter').goto_next_usage()" },
