@@ -54,6 +54,9 @@ end
 
 -- Autocmds
 vim.cmd([[
-:autocmd BufWritePost *.go lua vim.lsp.buf.formatting()
-:autocmd BufWritePost *.go lua OrgImports(1000)
+augroup GO_LSP
+	autocmd!
+	autocmd BufWritePost *.go :silent! lua vim.lsp.buf.formatting()
+	autocmd BufWritePre *.go :silent! lua OrgImports(1000)
+augroup END
 ]])

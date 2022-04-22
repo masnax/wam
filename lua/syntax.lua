@@ -36,7 +36,7 @@ vim.opt.foldmethod="indent"
 vim.g.coq_settings = { ["auto_start"] = 'shut-up' }
 local coq = require "coq"
 require'lspconfig'.gopls.setup(coq.lsp_ensure_capabilities())
-require'nvim-autopairs'.setup {}
+require'nvim-autopairs'.setup { map_cr = false, map_bs = false }
 
 
 require'lsp_signature'.setup()
@@ -54,12 +54,17 @@ require'navigator'.setup {
   border = double,
   default_mapping = false,
   lsp = {
-    code_action = {enable = true, sign = true, sign_priority = 40, virtual_text = true},
-    format_on_save = true,
+    code_action = {enable = false, sign = true, sign_priority = 40, virtual_text = true},
+    format_on_save = false,
     gopls = {
       settings = {
         gopls = {
-          staticcheck = false
+          analyses = {
+            unusedparams = false,
+          },
+          staticcheck = false,
+          completeUnimported = false,
+          usePlaceholders = false,
         }
       }
     }

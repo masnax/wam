@@ -29,7 +29,6 @@ return require('packer').startup(function(use)
 
 
   ---- Simple plugins can be specified as strings
-  use '9mm/vim-closer'
   use { 'phaazon/hop.nvim',
   config = function()
     vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
