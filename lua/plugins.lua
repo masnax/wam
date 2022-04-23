@@ -7,6 +7,14 @@ return require('packer').startup(function(use)
   -- Coq
   use { 'ms-jpq/coq_nvim',  branch = 'coq'}
   use { 'ms-jpq/coq.artifacts', branch = 'artifacts'}
+  use { 'ms-jpq/chadtree', branch = 'chad',
+    config = function()
+      vim.api.nvim_set_var("chadtree_settings", {
+        ["keymap.trash"] = {},
+        ["keymap.tertiary"] = {"t"},
+      })
+    end
+  }
 
   -- LSP
   use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
@@ -16,37 +24,32 @@ return require('packer').startup(function(use)
 
   -- Colorscheme
   use 'norcalli/nvim-colorizer.lua'
-  use { 'masnax/sunset-vim', config = function() vim.cmd([[colorscheme belafonte]]) end}
+  use { 'masnax/sunset-vim' }
   use { 'kyazdani42/nvim-web-devicons' }
   use { 'lambdalisue/glyph-palette.vim' }
-  use({
-    'CosmicNvim/cosmic-ui',
+  use { 'CosmicNvim/cosmic-ui',
     requires = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
-    config = function()
-      require('cosmic-ui').setup()
-    end,
-  })
-
-
-  ---- Simple plugins can be specified as strings
-  use { 'phaazon/hop.nvim',
-  config = function()
-    vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
-    vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-    require'hop'.setup({
-      keys = "asdfghjklqwertyuiopzxcvbnm",
-
-    })
-  end
- }
-
- use{ 'anuvyklack/pretty-fold.nvim',
- config = function()
-   require('pretty-fold').setup()
-   require('pretty-fold.preview').setup()
- end
+    config = function() require('cosmic-ui').setup() end
   }
-
+  use { 'phaazon/hop.nvim',
+    config = function()
+      vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+      vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+      require'hop'.setup({keys = "asdfghjklqwertyuiopzxcvbnm"})
+    end 
+  }
+  use{ 'anuvyklack/pretty-fold.nvim',
+    config = function()
+      require('pretty-fold').setup()
+      require('pretty-fold.preview').setup()
+    end
+  }
+  use {
+    'jghauser/fold-cycle.nvim',
+    config = function()
+      require('fold-cycle').setup()
+    end
+  }
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use { 'nvim-treesitter/nvim-treesitter-textobjects' }
   use { 'nvim-treesitter/nvim-treesitter-refactor' }
@@ -54,6 +57,5 @@ return require('packer').startup(function(use)
   use { 'RRethy/nvim-treesitter-textsubjects' }
   use { 'windwp/nvim-autopairs' }
   use { 'p00f/nvim-ts-rainbow' }
-
   use {'lewis6991/gitsigns.nvim'}
 end)

@@ -10,6 +10,7 @@ vim.opt.clipboard = "unnamed"
 vim.opt.hidden = true
 vim.opt.undodir = vim.env.HOME.."/.cache/nvim/undo"
 vim.opt.undofile = true
+vim.opt.cursorline = true
 
 vim.cmd([[
 set tabstop=2 shiftwidth=2 expandtab
@@ -30,6 +31,7 @@ map ' <Nop>
 :noremap ;' :tabnext<CR>
 :noremap '; :tabprev<CR>
 :nnoremap cc :TSHighlightCapturesUnderCursor<CR>
+:nnoremap ;; :CHADopen<cr>
 
 function! Start_New_Tab(path)
 	execute 'tabnew %:h/' . a:path

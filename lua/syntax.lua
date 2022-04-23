@@ -19,18 +19,6 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
--- Folding
-vim.cmd([[
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend))
-set foldnestmax=3
-set foldminlines=1
-set foldlevel=99
-]])
-
-vim.o.foldtext = [[substitute(getline(v:foldstart),'\\\\t',repeat('\\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
-vim.opt.foldmethod="indent"
 
 
 vim.g.coq_settings = { ["auto_start"] = 'shut-up' }
