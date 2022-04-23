@@ -6,8 +6,8 @@ end
 
 require("vim")
 require("plugins")
+require("theme")
 require("syntax")
 require("git")
 require("fold")
-require("theme")
 require'colorizer'.setup()
