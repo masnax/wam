@@ -15,12 +15,33 @@ vim.opt.cursorline = true
 vim.cmd([[
 set bg=dark
 set tabstop=2 shiftwidth=2 expandtab
-:command! WQ wq
-:command! Wq wq
+:command! WQ wbd
+:command! Wq wbd
 :command! W  w
 :command! QA qa
 :command! Qa qa
-:command! Q  q
+:command! Q  bd
+
+function! CloseOnLast()
+	let cnt = 0
+
+	for i in range(0, bufnr("$"))
+		if buflisted(i)
+			let cnt += 1
+		endif
+	endfor
+
+	if cnt > 2
+		bprevious|split|bnext|bdel
+	elseif cnt == 2
+		bdel
+	else
+		q
+	endif
+endfunction
+
+:cnoreabbrev q :call CloseOnLast()
+:cnoreabbrev wq w<bar>:call CloseOnLast()
 
 :noremap z( /(<CR> zfa) :noh<CR>
 :noremap z{ /{<CR> zfa} :noh<CR>
