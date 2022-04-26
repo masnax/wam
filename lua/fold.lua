@@ -1,3 +1,7 @@
+require('pretty-fold').setup()
+require('pretty-fold.preview').setup()
+require('fold-cycle').setup()
+
 vim.cmd([[
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()

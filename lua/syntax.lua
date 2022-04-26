@@ -27,7 +27,7 @@ require'lspconfig'.gopls.setup(coq.lsp_ensure_capabilities())
 require'nvim-autopairs'.setup { map_cr = false, map_bs = false }
 
 
-require'lsp_signature'.setup()
+require'lsp_signature'.setup({toggle_key = "K", auto_close_after = 3})
 
 
 local single = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}

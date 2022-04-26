@@ -12,6 +12,7 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_var("chadtree_settings", {
         ["keymap.trash"] = {},
         ["keymap.tertiary"] = {"t"},
+       -- ["keymap.preview"] = {"Space"},
       })
     end
   }
@@ -38,18 +39,8 @@ return require('packer').startup(function(use)
       require'hop'.setup({keys = "asdfghjklqwertyuiopzxcvbnm"})
     end 
   }
-  use{ 'anuvyklack/pretty-fold.nvim',
-    config = function()
-      require('pretty-fold').setup()
-      require('pretty-fold.preview').setup()
-    end
-  }
-  use {
-    'jghauser/fold-cycle.nvim',
-    config = function()
-      require('fold-cycle').setup()
-    end
-  }
+  use{ 'anuvyklack/pretty-fold.nvim' }
+  use { 'jghauser/fold-cycle.nvim' }
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use { 'nvim-treesitter/nvim-treesitter-textobjects' }
   use { 'nvim-treesitter/nvim-treesitter-refactor' }
@@ -58,4 +49,8 @@ return require('packer').startup(function(use)
   use { 'windwp/nvim-autopairs' }
   use { 'p00f/nvim-ts-rainbow' }
   use {'lewis6991/gitsigns.nvim'}
+
+
+  -- Menus
+  use { 'noib3/nvim-cokeline', requires = 'kyazdani42/nvim-web-devicons' }
 end)

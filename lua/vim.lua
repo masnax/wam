@@ -13,6 +13,7 @@ vim.opt.undofile = true
 vim.opt.cursorline = true
 
 vim.cmd([[
+set bg=dark
 set tabstop=2 shiftwidth=2 expandtab
 :command! WQ wq
 :command! Wq wq
@@ -28,13 +29,13 @@ set tabstop=2 shiftwidth=2 expandtab
 unmap <C-X>
 map ; <Nop>
 map ' <Nop>
-:noremap ;' :tabnext<CR>
-:noremap '; :tabprev<CR>
+:noremap ;' :bn<CR>
+:noremap '; :bp<CR>
 :nnoremap cc :TSHighlightCapturesUnderCursor<CR>
 :nnoremap ;; :CHADopen<cr>
 
 function! Start_New_Tab(path)
-	execute 'tabnew %:h/' . a:path
+	execute 'e %:h/' . a:path
 endfunction
 :command! -nargs=1 TT :call Start_New_Tab(<f-args>)
 ]])
