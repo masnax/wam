@@ -34,10 +34,13 @@ local single = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}
 local double = { '╔', '═', '╗', '║', '╝', '═', '╚', '║' }
 
 require'navigator'.setup {
+  on_attach = function(client, bufnr)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap=true, silent=true})
+  end,
   lsp_installer = false,
   lsp_signature_help = true,
 --  ts_fold = true,
-  treesitter_analysis = false,
+  treesitter_analysis = true,
   width = 0.7,
   border = double,
   default_mapping = false,
@@ -59,7 +62,7 @@ require'navigator'.setup {
   },
   keymaps = {
     {key = '<Space>', func = "require('navigator.def_impl').def_impl_sync()"},
-    {key = '<Space><Space>', func = "require('navigator.reference').async_ref()"},
+--    {key = '<Space><Space>', func = "require('navigator.reference').async_ref()"},
 --    {key = '<Space>', func = "require('navigator.definition').definition_preview()"},
 --    {key = '<Space>x', func = "require('navigator.definition').definition()"},
     {key = '[e', func = "diagnostic.goto_next({ border = 'rounded', max_width = 80})"},

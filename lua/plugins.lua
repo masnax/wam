@@ -23,6 +23,9 @@ return require('packer').startup(function(use)
   use {'ray-x/starry.nvim'}
   use {'masnax/navigator.lua', requires = {'masnax/guihua.lua', run = 'cd lua/fzy && make'}}
 
+  -- Search
+  use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/plenary.nvim'}}
+
   -- Colorscheme
   use 'norcalli/nvim-colorizer.lua'
   use { 'masnax/sunset-vim' }
