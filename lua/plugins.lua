@@ -42,7 +42,7 @@ return require('packer').startup(function(use)
       require'hop'.setup({keys = "asdfghjklqwertyuiopzxcvbnm"})
     end 
   }
-  use{ 'anuvyklack/pretty-fold.nvim' }
+  use{ 'anuvyklack/pretty-fold.nvim', requires = {"anuvyklack/nvim-keymap-amend"} }
   use { 'jghauser/fold-cycle.nvim' }
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use { 'nvim-treesitter/nvim-treesitter-textobjects' }
