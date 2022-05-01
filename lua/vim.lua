@@ -15,6 +15,7 @@ vim.opt.cursorline = true
 vim.cmd([[
 set bg=dark
 set tabstop=2 shiftwidth=2 expandtab
+:map Q <nop>
 :command! WQ wbd
 :command! Wq wbd
 :command! W  w
@@ -40,8 +41,8 @@ function! CloseOnLast()
 	endif
 endfunction
 
-:cnoreabbrev q :call CloseOnLast()
-:cnoreabbrev wq w<bar>:call CloseOnLast()
+:cnoreabbrev q :silent! call CloseOnLast() |:echo ''
+:cnoreabbrev wq w<bar>:silent! call CloseOnLast() |:echo ''
 
 :noremap z( /(<CR> zfa) :noh<CR>
 :noremap z{ /{<CR> zfa} :noh<CR>
@@ -54,6 +55,8 @@ map ' <Nop>
 :noremap '; :bp<CR>
 :nnoremap cc :TSHighlightCapturesUnderCursor<CR>
 :nnoremap ;; :CHADopen<cr>
+:nnoremap q: <nop>
+
 
 function! Start_New_Tab(path)
 	execute 'e %:h/' . a:path
@@ -77,10 +80,26 @@ function OrgImports(wait_ms)
 end
 
 -- Autocmds
+
 vim.cmd([[
+
+function! Ignore_LXD_Import_Alias()
+  if match(  join(getline(1, 20), "\n")  ,"lxd \"github.com/lxc/lxd/client")!=-1
+    :silent! %s/lxd "/"/
+    :silent! %s/"\t*github.com\/lxc\/lxd\/client"\n\t*"github.com\/lxc\/lxd\/client"/"github.com\/lxc\/lxd\/client"/
+  endif
+endfunction
+
+
+
 augroup GO_LSP
 	autocmd!
 	autocmd BufWritePost *.go :silent! lua vim.lsp.buf.formatting()
 	autocmd BufWritePre *.go :silent! lua OrgImports(1000)
+	autocmd BufWritePre *.go :silent! call Ignore_LXD_Import_Alias()|norm!``
+"  autocmd BufWritePre *.go :silent! %s/lxd "/"/|norm!``
+"  autocmd BufWritePre *.go :silent! %s/"\t*github.com\/lxc\/lxd\/client"\n\t*"github.com\/lxc\/lxd\/client"/"github.com\/lxc\/lxd\/client"/|norm!``
 augroup END
 ]])
+
+
