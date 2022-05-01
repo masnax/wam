@@ -21,7 +21,7 @@ return require('packer').startup(function(use)
   use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
   use 'ray-x/lsp_signature.nvim'
   use {'ray-x/starry.nvim'}
-  use {'masnax/navigator.lua', requires = {'masnax/guihua.lua', run = 'cd lua/fzy && make'}}
+  use {'masnax/navigator.lua', branch = 'edits', requires = {'masnax/guihua.lua', branch = 'edits', run = 'cd lua/fzy && make'}}
 
   -- Search
   use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/plenary.nvim'}}
