@@ -12,6 +12,7 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_var("chadtree_settings", {
         ["keymap.trash"] = {},
         ["keymap.tertiary"] = {"t"},
+        ["keymap.quit"] = {"q", ";'", "';"}
        -- ["keymap.preview"] = {"Space"},
       })
     end
