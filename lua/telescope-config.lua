@@ -2,8 +2,9 @@ vim.cmd([[
 :nnoremap // :lua require('telescope.builtin').live_grep({grep_open_files=true})<CR>
 :nnoremap \\ :lua require('telescope.builtin').live_grep()<CR>
 :nnoremap T :lua require('telescope.builtin').lsp_type_definitions({jump_type="never"})<CR>
+:nnoremap <Space> :lua require('telescope.builtin').def_impl({jump_type="never"})<CR>
 :nnoremap <Space><Space> :lua require('telescope.builtin').lsp_references({jump_type="never"})<CR>
-:nnoremap E :lua require('telescope.builtin').lsp_diagnostics()<CR>
+:nnoremap E :lua require('telescope.builtin').diagnostics()<CR>
 :nnoremap '' :lua require('telescope.builtin').treesitter()<CR>
 ]])
 
@@ -46,8 +47,8 @@ local keymaps = {
     ["<C-V>"] = telescope_custom_actions.multi_selection_open_vsplit,
     ["<C-S>"] = telescope_custom_actions.multi_selection_open_split,
     ["<C-T>"] = telescope_custom_actions.multi_selection_open_tab,
-    ["<C-DOWN>"] = require('telescope.actions').cycle_history_next,
-    ["<C-UP>"] = require('telescope.actions').cycle_history_prev,
+    ["<C-DOWN>"] = actions.cycle_history_next,
+    ["<C-UP>"] = actions.cycle_history_prev,
   },
   n = i,
 }
@@ -63,7 +64,8 @@ require('telescope').setup({
     live_grep = { mappings = keymaps },
     lsp_type_definitions = { mappings = keymaps },
     lsp_references = { mappings = keymaps },
-    lsp_diagnostics = { mappings = keymaps },
+    diagnostics = { mappings = keymaps },
   },
 })
 
+return keymaps

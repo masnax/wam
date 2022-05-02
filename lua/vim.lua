@@ -49,6 +49,7 @@ endfunction
 :noremap <tab><tab> <C-w>
 :map <C-X> <Nop>
 unmap <C-X>
+map <C-/> <Nop>
 map ; <Nop>
 map ' <Nop>
 :noremap ;' :bn<CR>

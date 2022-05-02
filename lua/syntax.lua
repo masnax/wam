@@ -23,11 +23,15 @@ require'nvim-treesitter.configs'.setup {
 
 vim.g.coq_settings = { ["auto_start"] = 'shut-up' }
 local coq = require "coq"
-require'lspconfig'.gopls.setup(coq.lsp_ensure_capabilities())
+
+local servers = {'gopls', }
+for _, lsp in pairs(servers) do
+  require'lspconfig'[lsp].setup(coq.lsp_ensure_capabilities())
+end
+
+
 require'nvim-autopairs'.setup { map_cr = false, map_bs = false }
-
-
-require'lsp_signature'.setup({toggle_key = "K", auto_close_after = 3})
+require'lsp_signature'.setup({toggle_key = "<C-/>", auto_close_after = 5})
 
 
 local single = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}
@@ -61,10 +65,6 @@ require'navigator'.setup {
     }
   },
   keymaps = {
-    {key = '<Space>', func = "require('navigator.def_impl').def_impl_sync()"},
---    {key = '<Space><Space>', func = "require('navigator.reference').async_ref()"},
---    {key = '<Space>', func = "require('navigator.definition').definition_preview()"},
---    {key = '<Space>x', func = "require('navigator.definition').definition()"},
     {key = '[e', func = "diagnostic.goto_next({ border = 'rounded', max_width = 80})"},
     {key = ']e', func = "diagnostic.goto_prev({ border = 'rounded', max_width = 80})"},
     {key = '[r', func = "require('navigator.treesitter').goto_next_usage()" },
