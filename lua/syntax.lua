@@ -40,6 +40,7 @@ local double = { '╔', '═', '╗', '║', '╝', '═', '╚', '║' }
 require'navigator'.setup {
   on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap=true, silent=true})
+    vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-/>', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap=true, silent=true})
   end,
   lsp_installer = false,
   lsp_signature_help = true,

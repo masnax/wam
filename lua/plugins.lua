@@ -12,8 +12,11 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_var("chadtree_settings", {
         ["keymap.trash"] = {},
         ["keymap.tertiary"] = {"t"},
-        ["keymap.quit"] = {"q", ";'", "';"}
-       -- ["keymap.preview"] = {"Space"},
+        ["keymap.quit"] = {"q", ";'", "';"},
+        ["keymap.collapse"] = {"<s-tab>","<s-up>"},
+        ["keymap.Change_focus_up"] = {"C", "<m-up>"},
+        ["keymap.change_focus"] = {"c", "<m-down>"},
+        ["keymap.secondary"] = {"Space", "<s-enter>"},
       })
     end
   }
@@ -36,6 +39,13 @@ return require('packer').startup(function(use)
     requires = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
     config = function() require('cosmic-ui').setup() end
   }
+  use({
+    "catppuccin/nvim",
+    as = "catppuccin"
+  })
+
+  use({ 'rose-pine/neovim', as = 'rose-pine', tag = 'v1.*', })
+
   use { 'phaazon/hop.nvim',
     config = function()
       vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})

@@ -5,7 +5,7 @@ vim.cmd([[
 :nnoremap <Space> :lua require('telescope.builtin').def_impl({jump_type="never"})<CR>
 :nnoremap <Space><Space> :lua require('telescope.builtin').lsp_references({jump_type="never"})<CR>
 :nnoremap E :lua require('telescope.builtin').diagnostics()<CR>
-:nnoremap '' :lua require('telescope.builtin').treesitter()<CR>
+:nnoremap '' :lua require('telescope.builtin').lsp_document_symbols()<CR>
 ]])
 
 local actions = require('telescope.actions')

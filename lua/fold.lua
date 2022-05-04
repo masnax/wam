@@ -6,7 +6,7 @@ vim.cmd([[
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend))
-set foldnestmax=5
+set foldnestmax=20
 set foldminlines=1
 set foldlevel=99
 "set foldmethod=indent
