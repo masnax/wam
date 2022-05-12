@@ -8,6 +8,7 @@ vim.cmd([[
 "hi CursorLineNr guifg=#ff0000
 "colo moonlight
 
+colo tangerine
 colo catppuccin
 colo rose-pine
 luafile $HOME/.cache/nvim/colorscheme-edits
@@ -135,6 +136,36 @@ _G.colors = {
     white1 = "#EED09C",
     white2 = "#F5E5C3",
     white3 = "#FFFCDD",
+  },
+  tangerine = {
+    black0 = "#200000",
+    black1 = "#141415",
+    grey0 = "#3B4252",
+    grey1 = "#434C5E",
+    grey2 = "#4C566A",
+    grey3 = "#616E88",
+    white0 = "#E5E9F0",
+    white1 = "#ECEFF4",
+    green0 = "#AFFFDF",
+    green1 = "#8FBCBB",
+    green2 = "#517777",
+    green3 = "#81A7A7",
+    blue0 = "#5FB1FF",
+    blue1 = "#4F81AC",
+    blue2 = "#868062",
+    blue3 = "#40E0E0",
+    blue4 = "#2f6f9a",
+    purple0 = "#4F50A0",
+    purple1 = "#AF9FEA",
+    red0 = "#ab1b5a",
+    red1 = "#c02040",
+    red2 = "#BF616A",
+    orange0 = "#F85E5E",
+    orange1 = "#FF7A0E",
+    orange2 = "#D08770",
+    yellow0 = "#e08e33",
+    yellow1 = "#F3A760",
+    yellow2 = "#FFBB7B",
   },
   belafonte = {
     black = "#20111a",

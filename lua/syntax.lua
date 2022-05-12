@@ -1,21 +1,22 @@
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "go", "lua" },
+  ensure_installed = { "go", "lua", "bash" },
   sync_install = false,
   highlight = {enable = true},
   indent = {enable = true},
   fold = {enable = true},
+  textsubjects = {enable = true},
   rainbow = {
     enable = true,
     extended_mode = true,
-   -- colors = {
-   --   "#ff0000",
-   --   "#ff7700",
-   --   "#ffff00",
-   --   "#00ff77",
-   --   "#00ffff",
-   --   "#0000ff",
-   --   "#7700ff",
-   -- },
+    colors = {
+      "#cc241d",
+      "#a89984",
+      "#8a7096",
+      "#d79921",
+      "#689d6a",
+      "#458588",
+      "#d65d0e",
+    },
   }
 }
 
@@ -24,14 +25,14 @@ require'nvim-treesitter.configs'.setup {
 vim.g.coq_settings = { ["auto_start"] = 'shut-up' }
 local coq = require "coq"
 
-local servers = {'gopls', }
+local servers = {'gopls', "bashls" }
 for _, lsp in pairs(servers) do
   require'lspconfig'[lsp].setup(coq.lsp_ensure_capabilities())
 end
 
 
 require'nvim-autopairs'.setup { map_cr = false, map_bs = false }
-require'lsp_signature'.setup({toggle_key = "<C-/>", auto_close_after = 5})
+require'lsp_signature'.setup({toggle_key = "<C-/>", auto_close_after = 3})
 
 
 local single = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}
@@ -40,7 +41,7 @@ local double = { '╔', '═', '╗', '║', '╝', '═', '╚', '║' }
 require'navigator'.setup {
   on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap=true, silent=true})
-    vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-/>', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap=true, silent=true})
+    --vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-/>', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap=true, silent=true})
   end,
   lsp_installer = false,
   lsp_signature_help = true,

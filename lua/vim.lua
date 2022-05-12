@@ -58,6 +58,25 @@ map ' <Nop>
 :nnoremap ;; :CHADopen<cr>
 :nnoremap q: <nop>
 
+function! JumpToNextWord()
+    normal w
+    while (strpart(getline('.'), col('.')-1, 1) !~ '\w')
+        normal w
+    endwhile
+endfunction
+
+function! JumpToPrevWord()
+    normal b
+    while (strpart(getline('.'), col('.')-1, 1) !~ '\w')
+        normal b
+    endwhile
+endfunction
+
+
+:map <Esc>B :call JumpToPrevWord()<CR>
+:map <Esc>F :call JumpToNextWord()<CR>
+:inoremap <Esc>B <C-\><C-o>:call JumpToPrevWord()<CR>
+:inoremap <Esc>F <C-\><C-o>:call JumpToNextWord()<CR>
 
 function! Start_New_Tab(path)
 	execute 'e %:h/' . a:path
@@ -100,6 +119,11 @@ augroup GO_LSP
 	autocmd BufWritePre *.go :silent! call Ignore_LXD_Import_Alias()|norm!``
 "  autocmd BufWritePre *.go :silent! %s/lxd "/"/|norm!``
 "  autocmd BufWritePre *.go :silent! %s/"\t*github.com\/lxc\/lxd\/client"\n\t*"github.com\/lxc\/lxd\/client"/"github.com\/lxc\/lxd\/client"/|norm!``
+augroup END
+
+augroup WHITESPACE
+  autocmd!
+  autocmd BufWritePre * :silent! :%s/\s\+$//e
 augroup END
 ]])
 
