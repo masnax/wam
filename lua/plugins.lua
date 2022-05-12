@@ -51,7 +51,7 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
       vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
       require'hop'.setup({keys = "asdfghjklqwertyuiopzxcvbnm"})
-    end 
+    end
   }
   use{ 'anuvyklack/pretty-fold.nvim', requires = {"anuvyklack/nvim-keymap-amend"} }
   use { 'jghauser/fold-cycle.nvim' }
@@ -63,6 +63,7 @@ return require('packer').startup(function(use)
   use { 'windwp/nvim-autopairs' }
   use { 'p00f/nvim-ts-rainbow' }
   use {'lewis6991/gitsigns.nvim'}
+  use { 'lukas-reineke/indent-blankline.nvim' }
 
 
   -- Menus

@@ -73,3 +73,14 @@ require'navigator'.setup {
     {key = ']r', func = "require('navigator.treesitter').goto_previous_usage()" },
   },
 }
+
+
+require'indent_blankline'.setup {
+  show_current_context = true,
+  context_char = '┃',
+--  context_char = '⋅',
+  char = "",
+}
+
+vim.cmd [[highlight IndentBlanklineContextChar guifg=#292734]]
+
