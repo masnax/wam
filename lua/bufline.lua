@@ -8,10 +8,37 @@ local red = vim.g.terminal_color_1
 local yellow = vim.g.terminal_color_3
 
 local components = {
-  outer_space = { text = ' ', bg = get_hex('Normal', 'bg'), },
-  inner_space = { text = ' ', },
-  corner_begin = { text = '', fg = get_hex('ColorColumn', 'bg'), bg = get_hex('Normal', 'bg'), },
-  corner_end = { text = '', fg = get_hex('ColorColumn', 'bg'), bg = get_hex('Normal', 'bg'), },
+  outer_space = {
+    text = ' ',
+    bg = function(buffer)
+      if not buffer.is_focused then
+        return "none"
+      end
+      return get_hex('Normal', 'bg')
+    end,
+  },
+
+  inner_space = { text = ' ', bg = function(buffer) if not buffer.is_focused then return colors.belafonte.blue2 end return nil end},
+  corner_begin = {
+    text = '',
+    bg =  get_hex('Normal', 'bg'),
+    fg = function(buffer)
+      if not buffer.is_focused then
+        return colors.belafonte.blue2
+      end
+      return get_hex('ColorColumn', 'bg')
+    end,
+  },
+  corner_end = {
+    text = '',
+    bg = get_hex('Normal', 'bg'),
+    fg = function(buffer)
+      if not buffer.is_focused then
+        return colors.belafonte.blue2
+      end
+      return get_hex('ColorColumn', 'bg')
+    end,
+  },
 
   devicons = {
         text = function(buffer)
@@ -32,6 +59,12 @@ local components = {
         and 'italic,bold'
          or nil
     end,
+    bg = function(buffer)
+      if not buffer.is_focused then
+        return colors.belafonte.blue2
+      end
+      return nil
+    end,
     truncation = { priority = 1 }
   },
 
@@ -46,6 +79,12 @@ local components = {
         or (buffer.is_focused and 'bold')
         or (buffer.diagnostics.errors ~= 0 and 'underline')
         or nil
+    end,
+    bg = function(buffer)
+      if not buffer.is_focused then
+        return colors.belafonte.blue2
+      end
+      return nil
     end,
     truncation = {
       priority = 2,
@@ -66,6 +105,7 @@ local components = {
         or (buffer.diagnostics.warnings ~= 0 and warnings_fg)
         or nil
     end,
+    bg = function(buffer) if not buffer.is_focused then return colors.belafonte.blue2 end return nil end,
     truncation = { priority = 1 },
   },
 
@@ -76,6 +116,7 @@ local components = {
     fg = function(buffer)
       return buffer.is_modified and green or nil
     end,
+    bg = function(buffer) if not buffer.is_focused then return colors.belafonte.blue2 end return nil end,
     delete_buffer_on_left_click = true,
     truncation = { priority = 1 },
   },
@@ -108,3 +149,5 @@ require('cokeline').setup({
     components.corner_end,
   },
 })
+
+vim.cmd([[hi TablineFill guibg=none]])

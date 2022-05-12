@@ -1,14 +1,10 @@
 require'catppuccin'.setup()
 require'rose-pine'.setup({
   disable_italics = true,
+  --disable_background = true,
 })
 
 vim.cmd([[
-"hi LineNr gui=bold
-"hi CursorLineNr guifg=#ff0000
-"colo moonlight
-
-colo tangerine
 colo catppuccin
 colo rose-pine
 luafile $HOME/.cache/nvim/colorscheme-edits
@@ -23,13 +19,13 @@ _G.hi = function(save, group, gui)
       fg = get_color(gui.fg, "fg#")
     end
   end
-  
+
   if gui.bg then
     if string.match(gui.bg, "%u") and string.match(gui.bg, "#") == nil then
       bg = get_color(gui.bg, "bg#")
     end
   end
-  
+
   local bold = get_color(group, "bold") == "1"
   local italic = get_color(group, "italic") == "1"
   local underline = get_color(group, "underline") == "1"
@@ -176,6 +172,7 @@ _G.colors = {
     green1 = "#858062",
     yellow1 = "#e9a448",
     blue1 = "#416978",
+    blue2 = "#292734",
     brown1 = "#96522b",
     brown2 = "#45363b",
     brown3 = "#5e5252",

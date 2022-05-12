@@ -68,4 +68,5 @@ return require('packer').startup(function(use)
 
   -- Menus
   use { 'noib3/nvim-cokeline', requires = 'kyazdani42/nvim-web-devicons' }
+  use { 'feline-nvim/feline.nvim' }
 end)
