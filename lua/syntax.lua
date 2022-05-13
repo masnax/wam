@@ -51,14 +51,14 @@ require'navigator'.setup {
   border = double,
   default_mapping = false,
   lsp = {
-    code_action = {enable = false, sign = true, sign_priority = 40, virtual_text = true},
+    code_action = {enable = true, sign = true, sign_priority = 40, virtual_text = true},
+    code_lens_action = {enable = true, sign = true, sign_priority = 40, virtual_text = true},
     format_on_save = false,
     gopls = {
       settings = {
         gopls = {
-          analyses = {
-            unusedparams = false,
-          },
+          analyses = { unusedparams = false, },
+          codelenses = { gc_details = false, },
           staticcheck = false,
           completeUnimported = false,
           usePlaceholders = false,

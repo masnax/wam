@@ -177,4 +177,16 @@ _G.colors = {
     brown2 = "#45363b",
     brown3 = "#5e5252",
   },
+  fire = {
+    black1 = "#212123",
+    purple1 = "#AB6192",
+    white1 = "#E1A1A4",
+    pink1 = "#CC4D5F",
+    orange1 = "#E9674A",
+    red1 = "#D53A4C",
+    yellow1 = "#FB9D5A",
+    brown1 = "#A76255",
+    grey1 = "#423746",
+    grey2 = "#493C48",
+  }
 }
