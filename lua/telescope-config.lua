@@ -56,6 +56,14 @@ local keymaps = {
 
 require('telescope').setup({
   defaults = {
+   layout_strategy = 'flex',
+   layout_config = {
+      width = 0.99,
+      height = 0.99,
+      flex = {flip_columns = 200, },
+      vertical = { preview_height = 0.8 },
+      horizontal = { preview_width = 0.6 },
+    },
   borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
     --sorting_strategy = "ascending",
     -- layout_config = { horizontal = { prompt_position = "top", }, },

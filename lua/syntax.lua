@@ -22,7 +22,7 @@ require'nvim-treesitter.configs'.setup {
 
 
 
-vim.g.coq_settings = { ["auto_start"] = 'shut-up' }
+vim.g.coq_settings = { ["auto_start"] = 'shut-up', ["limits"] = { ["completion_auto_timeout"] = 0.12  }  }
 local coq = require "coq"
 
 local servers = {'gopls', "bashls" }
@@ -51,7 +51,7 @@ require'navigator'.setup {
   border = double,
   default_mapping = false,
   lsp = {
-    code_action = {enable = true, sign = true, sign_priority = 40, virtual_text = true},
+    code_action = {enable = true, sign = true, sign_priority = 40, virtual_text = false},
     code_lens_action = {enable = true, sign = true, sign_priority = 40, virtual_text = true},
     format_on_save = false,
     gopls = {

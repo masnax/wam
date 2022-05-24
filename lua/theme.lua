@@ -180,6 +180,7 @@ _G.colors = {
   fire = {
     black1 = "#212123",
     purple1 = "#AB6192",
+    purple2 = "#8a7096",
     white1 = "#E1A1A4",
     pink1 = "#CC4D5F",
     orange1 = "#E9674A",
