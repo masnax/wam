@@ -57,6 +57,8 @@ map ' <Nop>
 :nnoremap cc :TSHighlightCapturesUnderCursor<CR>
 :nnoremap ;; :CHADopen<cr>
 :nnoremap q: <nop>
+:nnoremap q/ <nop>
+:nnoremap qq <nop>
 
 function! JumpToNextWord()
     normal w
