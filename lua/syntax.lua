@@ -33,6 +33,7 @@ end
 
 require'nvim-autopairs'.setup { map_cr = false, map_bs = false }
 require'lsp_signature'.setup({toggle_key = "<C-/>", auto_close_after = 3})
+require'nvim-gps'.setup()
 
 
 local single = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}

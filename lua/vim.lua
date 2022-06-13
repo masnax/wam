@@ -106,7 +106,7 @@ end
 vim.cmd([[
 
 function! Ignore_LXD_Import_Alias()
-  if match(  join(getline(1, 20), "\n")  ,"lxd \"github.com/lxc/lxd/client")!=-1
+  if match(  join(getline(1, 35), "\n")  ,"lxd \"github.com/lxc/lxd/client")!=-1
     :silent! %s/lxd "/"/
     :silent! %s/"\t*github.com\/lxc\/lxd\/client"\n\t*"github.com\/lxc\/lxd\/client"/"github.com\/lxc\/lxd\/client"/
   endif

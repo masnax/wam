@@ -193,6 +193,30 @@ options.diagnostic = {
    },
 }
 
+options.nvim_gps = {
+   provider = function()
+      -- nvim-gps loads at cursorMoved so need to handle this
+      local gps_loaded, gps = pcall(require, "nvim-gps")
+
+      if not gps_loaded then
+         return
+      end
+
+      return " " .. gps.get_location()
+   end,
+
+   enabled = function()
+      local gps_loaded, gps = pcall(require, "nvim-gps")
+
+      if not gps_loaded then
+         return false
+      end
+
+      return gps.is_available()
+   end,
+
+   hl = {fg = colors.belafonte.grey1, bg = colors.belafonte.blue2 }
+}
 
 options.empty_space = {
    provider = " ",
@@ -261,6 +285,7 @@ add_table(options.left, options.empty_space_right)
 
 add_table(options.middle, {provider = options.separator_style.left, hl = {fg = colors.belafonte.blue2, bg = 'none'}})
 add_table(options.middle, options.file_name)
+add_table(options.middle, options.nvim_gps)
 add_table(options.middle, {provider = options.separator_style.right, hl = {fg = colors.belafonte.blue2, bg = 'none'}})
 
 -- right

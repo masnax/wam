@@ -63,6 +63,7 @@ return require('packer').startup(function(use)
   use { 'nvim-treesitter/playground' }
   use { 'RRethy/nvim-treesitter-textsubjects' }
   use { 'windwp/nvim-autopairs' }
+  use { 'SmiteshP/nvim-gps' }
   use { 'p00f/nvim-ts-rainbow' }
   use {'lewis6991/gitsigns.nvim'}
   use { 'lukas-reineke/indent-blankline.nvim' }
