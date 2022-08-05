@@ -26,6 +26,9 @@ return require('packer').startup(function(use)
   use 'ray-x/lsp_signature.nvim'
   use {'ray-x/starry.nvim'}
   use {'masnax/navigator.lua', branch = 'edits', requires = {'masnax/guihua.lua', branch = 'edits', run = 'cd lua/fzy && make'}}
+  use {"https://git.sr.ht/~whynothugo/lsp_lines.nvim"}
+
+
 
   -- Search
   use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/plenary.nvim'}}

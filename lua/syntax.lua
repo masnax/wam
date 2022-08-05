@@ -32,7 +32,7 @@ end
 
 
 require'nvim-autopairs'.setup { map_cr = false, map_bs = false }
-require'lsp_signature'.setup({toggle_key = "<C-/>", auto_close_after = 3})
+require'lsp_signature'.setup({toggle_key = "<C-_>", auto_close_after = 3})
 require'nvim-gps'.setup()
 
 
@@ -41,7 +41,11 @@ local double = { '╔', '═', '╗', '║', '╝', '═', '╚', '║' }
 
 require'navigator'.setup {
   on_attach = function(client, bufnr)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap=true, silent=true})
+    local lsp_opts = { noremap=true, silent=true }
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']e', '<cmd>lua vim.diagnostic.goto_prev({float=false})<CR>', lsp_opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[e', '<cmd>lua vim.diagnostic.goto_next({float=false})<CR>', lsp_opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'E', '<cmd>lua vim.diagnostic.open_float()<CR>', lsp_opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', lsp_opts)
     --vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-/>', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap=true, silent=true})
   end,
   lsp_installer = false,
@@ -55,6 +59,9 @@ require'navigator'.setup {
     code_action = {enable = true, sign = true, sign_priority = 40, virtual_text = false},
     code_lens_action = {enable = true, sign = true, sign_priority = 40, virtual_text = true},
     format_on_save = false,
+    diagnostic = {
+      virtual_text = false,
+    },
     gopls = {
       settings = {
         gopls = {
@@ -68,13 +75,17 @@ require'navigator'.setup {
     }
   },
   keymaps = {
-    {key = '[e', func = "diagnostic.goto_next({ border = 'rounded', max_width = 80})"},
-    {key = ']e', func = "diagnostic.goto_prev({ border = 'rounded', max_width = 80})"},
     {key = '[r', func = "require('navigator.treesitter').goto_next_usage()" },
     {key = ']r', func = "require('navigator.treesitter').goto_previous_usage()" },
   },
 }
 
+require'lsp_lines'.setup()
+
+vim.diagnostic.config({
+  virtual_text = false,
+  virtual_lines = true,
+})
 
 require'indent_blankline'.setup {
   show_current_context = true,
