@@ -22,7 +22,14 @@ require'nvim-treesitter.configs'.setup {
 
 
 
-vim.g.coq_settings = { ["auto_start"] = 'shut-up', ["limits"] = { ["completion_auto_timeout"] = 0.12  }  }
+vim.g.coq_settings = {
+  ["auto_start"] = 'shut-up',
+  ["limits"] = { ["completion_auto_timeout"] = 0.12  },
+  ["clients"] = {
+    ["tree_sitter"] = { ["enabled"] = false },
+  }
+}
+
 local coq = require "coq"
 
 local servers = {'gopls', "bashls" }
@@ -65,6 +72,7 @@ require'navigator'.setup {
     gopls = {
       settings = {
         gopls = {
+          buildFlags = {"-tags=test"},
           analyses = { unusedparams = false, },
           codelenses = { gc_details = false, },
           staticcheck = false,
