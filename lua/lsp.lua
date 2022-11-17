@@ -29,16 +29,18 @@ for _, lsp in pairs(servers) do
   require'lspconfig'[lsp].setup(coq.lsp_ensure_capabilities({
     on_attach = function(client, bufnr)
       local lsp_opts = { noremap=true, silent=true }
-      vim.api.nvim_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_prev()<CR>', lsp_opts)
-      vim.api.nvim_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.goto_next()<CR>', lsp_opts)
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap=true, silent=true})
+      vim.api.nvim_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_prev({float=false})<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.goto_next({float=false})<CR>', lsp_opts)
+      vim.api.nvum_set_keymap('n', 'E', '<cmd>lua vim.diagnostic.open_flat()<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', 'C', '<cmd>lua vim.lsp.buf.code_action()<CR>', lsp_opts)
     end,
     gopls = {
       settings = {
         gopls = {
-          analyses = {
-            unusedparams = false,
-          },
+          buildFlags = {"-tags=test"},
+          analyses = { unusedparams = false, },
+          codelenses = { gc_details = false, },
           staticcheck = false,
           completeUnimported = false,
           usePlaceholders = false,
