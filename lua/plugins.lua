@@ -35,6 +35,7 @@ return require('packer').startup(function(use)
 
   -- Colorscheme
   use 'norcalli/nvim-colorizer.lua'
+  use { 'folke/paint.nvim' }
   use { 'masnax/sunset-vim' }
   use { 'kyazdani42/nvim-web-devicons' }
   use { 'lambdalisue/glyph-palette.vim' }

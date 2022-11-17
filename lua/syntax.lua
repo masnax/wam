@@ -70,3 +70,17 @@ require'indent_blankline'.setup {
 
 vim.cmd [[highlight IndentBlanklineContextChar guifg=#292734]]
 
+require'paint'.setup {
+  highlights = {
+    {
+      filter = { filetype = "go" },
+      pattern = "%s*//%s*TODO:",
+      hl = "@constant",
+    },
+    {
+      filter = { filetype = "go" },
+      pattern = "%s*//%s*FIXME:",
+      hl = "@constant",
+    },
+  },
+}
