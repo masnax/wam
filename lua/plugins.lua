@@ -76,4 +76,5 @@ return require('packer').startup(function(use)
   -- Menus
   use { 'noib3/nvim-cokeline', requires = 'kyazdani42/nvim-web-devicons' }
   use { 'feline-nvim/feline.nvim' }
+  use{ 'folke/noice.nvim', requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" } }
 end)
