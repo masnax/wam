@@ -89,15 +89,15 @@ options.file_info = {
     return readonly_str..""..modified_str
   end,
 
-  hl = {fg = colors.baroque.brown1, bg = colors.belafonte.yellow1},
+  hl = {fg = colors.fire.black1, bg = colors.fire.red1},
 }
 
 options.mode = {
    provider = function()
     return options.mode_colors[vim.fn.mode()][1]
    end,
-   hl = {bg = colors.belafonte.yellow1, fg = colors.baroque.brown1},
-   right_sep = {str = options.separator_style.right, hl = {fg = colors.belafonte.yellow1, bg=colors.belafonte.blue1 }},
+   hl = {bg = colors.fire.red1, fg = colors.baroque.brown1},
+   right_sep = {str = options.separator_style.right, hl = {fg = colors.fire.red1, bg=colors.belafonte.blue1 }},
 }
 
 options.file_name = {
@@ -116,11 +116,11 @@ options.file_name = {
       end
    end,
    hl = function()
-    local fg = colors.renaissance.bluegrey
+    local fg = colors.fire.purple1
     if vim.bo.modified then
-      fg = colors.tangerine.red0
+      fg = colors.fire.red1
     end
-    return {fg = fg, bg = colors.belafonte.blue2 }
+    return {fg = fg, bg = colors.fire.black1 }
   end,
 }
 
@@ -128,19 +128,19 @@ options.diff = {
    add = {
       provider = "git_diff_added",
       icon = "  ",
-      hl = {fg = colors.belafonte.white1, bg = colors.baroque.green2 },
+      hl = {fg = colors.belafonte.white1, bg = colors.fire.purple3 },
    },
 
    change = {
       provider = "git_diff_changed",
       icon = "  ",
-      hl = {fg = colors.belafonte.white1, bg = colors.baroque.green2 },
+      hl = {fg = colors.belafonte.white1, bg = colors.fire.purple3 },
    },
 
    remove = {
       provider = "git_diff_removed",
       icon = "  ",
-      hl = {fg = colors.belafonte.white1, bg = colors.baroque.green2 },
+      hl = {fg = colors.belafonte.white1, bg = colors.fire.purple3 },
    },
 
 }
@@ -149,8 +149,8 @@ options.git_branch = {
    provider = function()
     return " "..(vim.b.gitsigns_head or ''), ''
   end,
-   hl = {bg = colors.baroque.red1},
-   left_sep = {str = options.separator_style.left, hl = {fg = colors.baroque.red1, bg=colors.baroque.green2 }},
+   hl = {bg = colors.fire.orange1, fg = colors.fire.black1},
+   left_sep = {str = options.separator_style.left, hl = {fg = colors.fire.orange1, bg=colors.fire.purple3 }},
 }
 
 options.diagnostic = {
@@ -215,7 +215,7 @@ options.nvim_gps = {
       return gps.is_available()
    end,
 
-   hl = {fg = colors.belafonte.grey1, bg = colors.belafonte.blue2 }
+   hl = {fg = colors.fire.purple2, bg = colors.fire.black1 }
 }
 
 options.empty_space = {
@@ -229,12 +229,12 @@ options.empty_space_right = {
 
 options.empty_space_left = {
    provider = options.separator_style.left,
-   hl = {bg = colors.baroque.red1, fg = colors.belafonte.blue1},
+   hl = {bg = colors.fire.orange1, fg = colors.belafonte.blue1},
 }
 
 options.empty_space_left2 = {
    provider = options.separator_style.left,
-   hl = {bg = 'none', fg = colors.baroque.green2},
+   hl = {bg = 'none', fg = colors.fire.purple3},
 }
 
 options.current_line = {
@@ -256,8 +256,8 @@ options.position = {
 
     return string.format('%s%03d', options.separator_style.position_icon, col)
   end,
-  left_sep = {str = options.separator_style.left, hl = {fg = colors.belafonte.yellow1, bg=colors.belafonte.blue1 }},
-  hl = {bg = colors.belafonte.yellow1, fg = colors.baroque.brown1},
+  left_sep = {str = options.separator_style.left, hl = {fg = colors.fire.red1, bg=colors.belafonte.blue1 }},
+  hl = {bg = colors.fire.red1, fg = colors.baroque.brown1},
 }
 
 local function add_table(tbl, inject)
@@ -272,7 +272,7 @@ options.middle = {}
 options.right = {}
 
 -- left
-add_table(options.left, {provider = " "..options.separator_style.left, hl = {fg = colors.belafonte.yellow1, bg = 'none'}})
+add_table(options.left, {provider = " "..options.separator_style.left, hl = {fg = colors.fire.red1, bg = 'none'}})
 add_table(options.left, options.file_info)
 add_table(options.left, options.mode)
 --add_table(options.left, options.file_name)
@@ -283,10 +283,10 @@ add_table(options.left, options.diagnostic.info)
 add_table(options.left, options.empty_space_right)
 
 
-add_table(options.middle, {provider = options.separator_style.left, hl = {fg = colors.belafonte.blue2, bg = 'none'}})
+add_table(options.middle, {provider = options.separator_style.left, hl = {fg = colors.fire.black1, bg = 'none'}})
 add_table(options.middle, options.file_name)
 add_table(options.middle, options.nvim_gps)
-add_table(options.middle, {provider = options.separator_style.right, hl = {fg = colors.belafonte.blue2, bg = 'none'}})
+add_table(options.middle, {provider = options.separator_style.right, hl = {fg = colors.fire.black1, bg = 'none'}})
 
 -- right
 add_table(options.right, options.empty_space_left2)
@@ -297,7 +297,7 @@ add_table(options.right, options.git_branch)
 add_table(options.right, options.empty_space_left)
 add_table(options.right, options.current_line)
 add_table(options.right, options.position)
-add_table(options.right, {provider = options.separator_style.right.." ", hl = {fg = colors.belafonte.yellow1, bg = 'none'}})
+add_table(options.right, {provider = options.separator_style.right.." ", hl = {fg = colors.fire.red1, bg = 'none'}})
 
 -- Initialize the components table
 options.components = { active = {} }
