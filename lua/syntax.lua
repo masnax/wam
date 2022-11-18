@@ -16,6 +16,13 @@ require'nvim-treesitter.configs'.setup {
       "#689d6a",
       "#458588",
       "#d65d0e",
+   --   "#ff0000",
+   --   "#ff7700",
+   --   "#ffff00",
+   --   "#00ff77",
+   --   "#00ffff",
+   --   "#0000ff",
+   --   "#7700ff",
     },
   }
 }
@@ -47,7 +54,28 @@ local coq = require "coq"
 
 local servers = {'gopls', "bashls" }
 for _, lsp in pairs(servers) do
-  require'lspconfig'[lsp].setup(coq.lsp_ensure_capabilities())
+  require'lspconfig'[lsp].setup(coq.lsp_ensure_capabilities({
+    on_attach = function(client, bufnr)
+      local lsp_opts = { noremap=true, silent=true }
+      vim.api.nvim_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_prev({float=false})<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.goto_next({float=false})<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', 'E', '<cmd>lua vim.diagnostic.open_flat()<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', 'C', '<cmd>lua vim.lsp.buf.code_action()<CR>', lsp_opts)
+    end,
+    gopls = {
+      settings = {
+        gopls = {
+          buildFlags = {"-tags=test"},
+          analyses = { unusedparams = false, },
+          codelenses = { gc_details = false, },
+          staticcheck = false,
+          completeUnimported = false,
+          usePlaceholders = false,
+        }
+      }
+    }
+  }))
 end
 
 
