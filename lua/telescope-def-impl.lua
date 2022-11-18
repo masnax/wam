@@ -71,7 +71,9 @@ local def_impl = function(opts)
     sorter = conf.generic_sorter(opts),
     attach_mappings = function(_, map)
       for k, v in pairs(config.i) do
-        map('n', k, v)
+        if not k == "<CR>" then
+          map('n', k, v)
+        end
         map('i', k, v)
       end
         return true
