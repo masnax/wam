@@ -13,9 +13,10 @@ require'nvim-treesitter.configs'.setup {
       "#a89984",
       "#8a7096",
       "#d79921",
-      "#689d6a",
+      "#d53a4c",
       "#458588",
       "#d65d0e",
+      --"#689d6a",
    --   "#ff0000",
    --   "#ff7700",
    --   "#ffff00",
@@ -38,6 +39,9 @@ vim.g.coq_settings = {
   ["keymap"] = {
     ["pre_select"] = true,
     ["recommended"] = false,
+  },
+  ["completion"] = {
+    ["skip_after"] = {"{", "}", "[", "]"},
   },
 }
 
