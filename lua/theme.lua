@@ -10,6 +10,25 @@ colo rose-pine
 luafile $HOME/.cache/nvim/colorscheme-edits
 ]])
 
+_G.dump = function(o)
+  local function dump2(o)
+    if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+        if type(k) ~= 'number' then k = '"'..k..'"' end
+        s = s .. '['..k..'] = ' .. dump2(v) .. ','
+      end
+      return s .. '} '
+    elseif type(o) == "string" then
+      return tostring("\"" .. o .. "\"")
+    else
+      return tostring(o)
+    end
+  end
+
+  print(dump2(o))
+end
+
 _G.hi = function(save, group, gui)
   local fg = gui.fg or get_color(group, "fg#") or "none"
   local bg = gui.bg or get_color(group, "bg#") or "none"
