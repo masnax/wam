@@ -1,6 +1,6 @@
 require'notify'.setup {
   fps = 600,
-  timeout = 500,
+  timeout = 1800,
   top_down = true,
   render = "minimal",
   stages = "slide",
@@ -10,15 +10,15 @@ require'noice'.setup {
   views = {
     cmdline_popup = {
       position = { row = "50%", col = "50%", },
-      size = { width = 60, height = "auto", },
+      size = { width = 90, height = "auto", },
     },
-    popupmenu = {
-      size = { width = 60, height = 15, },
-      border = { style = "rounded", padding = {0,1 }, },
-      win_options = {
-        winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-      },
-    },
+--    popupmenu = {
+--      size = { width = 60, height = 15, },
+--      border = { style = "rounded", padding = {0,1 }, },
+--      win_options = {
+--        winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+--      },
+--    },
   },
 
   lsp = {
