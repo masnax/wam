@@ -66,6 +66,20 @@ for _, lsp in pairs(servers) do
       vim.api.nvim_set_keymap('n', 'E', '<cmd>lua vim.diagnostic.open_flat()<CR>', lsp_opts)
       vim.api.nvim_set_keymap('n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', lsp_opts)
       vim.api.nvim_set_keymap('n', 'C', '<cmd>lua vim.lsp.buf.code_action()<CR>', lsp_opts)
+
+      if client.server_capabilities.documentHighlightProvider then
+        vim.api.nvim_exec(
+          [[
+    augroup lsp_document_highlight
+    autocmd! * <buffer>
+    autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+    autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+    augroup END
+    ]],
+          false
+        )
+      end
+
     end,
     gopls = {
       settings = {
