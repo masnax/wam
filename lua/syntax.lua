@@ -35,6 +35,8 @@ vim.g.coq_settings = {
   ["limits"] = { ["completion_auto_timeout"] = 0.15  },
   ["clients"] = {
     ["tree_sitter"] = { ["enabled"] = false },
+    ["buffers"] = { ["enabled"] = false },
+    ["snippets"] = { ["enabled"] = false },
   },
   ["keymap"] = {
     ["pre_select"] = true,
@@ -97,7 +99,6 @@ for _, lsp in pairs(servers) do
 end
 
 
-require'nvim-autopairs'.setup { map_cr = false, map_bs = false }
 require'lsp_signature'.setup({toggle_key = "<C-_>", auto_close_after = 3})
 require'nvim-gps'.setup()
 require'lsp_lines'.setup()
@@ -113,6 +114,34 @@ require'indent_blankline'.setup {
 --  context_char = '⋅',
   char = "",
 }
+
+local npairs = require('nvim-autopairs')
+local remap = vim.api.nvim_set_keymap
+npairs.setup { map_cr = false, map_bs = false }
+_G.MUtils= {}
+
+MUtils.CR = function()
+  if vim.fn.pumvisible() ~= 0 then
+    if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
+      return npairs.esc('<c-y>')
+    else
+      return npairs.esc('<c-e>') .. npairs.autopairs_cr()
+    end
+  else
+    return npairs.autopairs_cr()
+  end
+end
+remap('i', '<cr>', 'v:lua.MUtils.CR()', { expr = true, noremap = true })
+
+MUtils.BS = function()
+  if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ 'mode' }).mode == 'eval' then
+    return npairs.esc('<c-e>') .. npairs.autopairs_bs()
+  else
+    return npairs.autopairs_bs()
+  end
+end
+
+remap('i', '<bs>', 'v:lua.MUtils.BS()', { expr = true, noremap = true })
 
 vim.cmd [[highlight IndentBlanklineContextChar guifg=#292734]]
 

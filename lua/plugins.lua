@@ -17,6 +17,7 @@ return require('packer').startup(function(use)
         ["keymap.Change_focus_up"] = {"C", "<m-up>"},
         ["keymap.change_focus"] = {"c", "<m-down>"},
         ["keymap.secondary"] = {"Space", "<s-enter>"},
+        ["theme.icon_colour_set"] = "none",
       })
     end
   }
@@ -33,6 +34,8 @@ return require('packer').startup(function(use)
 
   -- Search
   use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/plenary.nvim'}}
+  use {'nvim-telescope/telescope-file-browser.nvim'}
+  use {'debugloop/telescope-undo.nvim'}
 
   -- Colorscheme
   use 'norcalli/nvim-colorizer.lua'
@@ -49,7 +52,7 @@ return require('packer').startup(function(use)
     as = "catppuccin"
   })
 
-  use({ 'rose-pine/neovim', as = 'rose-pine', tag = 'v1.*', })
+  use({ 'rose-pine/neovim', as = 'rose-pine' })
 
   use { 'phaazon/hop.nvim',
     config = function()
@@ -78,4 +81,7 @@ return require('packer').startup(function(use)
   use { 'noib3/nvim-cokeline', requires = 'kyazdani42/nvim-web-devicons' }
   use { 'feline-nvim/feline.nvim' }
   use{ 'folke/noice.nvim', requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" } }
+
+
+  use { "jackMort/ChatGPT.nvim", requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } }
 end)

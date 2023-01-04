@@ -65,8 +65,11 @@ map ; <Nop>
 map ' <Nop>
 :noremap ;' :bn<CR>
 :noremap '; :bp<CR>
-:nnoremap cc :TSHighlightCapturesUnderCursor<CR>
-:nnoremap ;; :CHADopen<cr>
+:nnoremap cc :lua get_hl()<CR>
+:nnoremap CC :ColorizerToggle<CR>
+:nnoremap <Esc> :silent! noh<CR>
+:nnoremap ;; :Telescope file_browser<cr>
+:nnoremap U :Telescope undo<cr>
 :nnoremap q: <nop>
 :nnoremap q/ <nop>
 :nnoremap qq <nop>
