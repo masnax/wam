@@ -50,7 +50,7 @@ end
 
 
 
-local config = require("telescope-config")
+local config = require("ts.config")
 local def_impl = function(opts)
   opts = opts or {}
   local store = get_locations({}, "textDocument/definition", opts)
