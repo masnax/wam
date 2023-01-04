@@ -18,13 +18,13 @@ local components = {
     end,
   },
 
-  inner_space = { text = ' ', bg = function(buffer) if not buffer.is_focused then return colors.belafonte.blue2 end return nil end},
+  inner_space = { text = ' ', bg = function(buffer) if not buffer.is_focused then return palette.surface_light end return nil end},
   corner_begin = {
     text = '',
     bg =  get_hex('Normal', 'bg'),
     fg = function(buffer)
       if not buffer.is_focused then
-        return colors.belafonte.blue2
+        return palette.surface_light
       end
       return get_hex('ColorColumn', 'bg')
     end,
@@ -34,7 +34,7 @@ local components = {
     bg = get_hex('Normal', 'bg'),
     fg = function(buffer)
       if not buffer.is_focused then
-        return colors.belafonte.blue2
+        return palette.surface_light
       end
       return get_hex('ColorColumn', 'bg')
     end,
@@ -61,7 +61,7 @@ local components = {
     end,
     bg = function(buffer)
       if not buffer.is_focused then
-        return colors.belafonte.blue2
+        return palette.surface_light
       end
       return nil
     end,
@@ -82,7 +82,7 @@ local components = {
     end,
     bg = function(buffer)
       if not buffer.is_focused then
-        return colors.belafonte.blue2
+        return palette.surface_light
       end
       return nil
     end,
@@ -105,7 +105,7 @@ local components = {
         or (buffer.diagnostics.warnings ~= 0 and warnings_fg)
         or nil
     end,
-    bg = function(buffer) if not buffer.is_focused then return colors.belafonte.blue2 end return nil end,
+    bg = function(buffer) if not buffer.is_focused then return palette.surface_light end return nil end,
     truncation = { priority = 1 },
   },
 
@@ -116,7 +116,7 @@ local components = {
     fg = function(buffer)
       return buffer.is_modified and green or nil
     end,
-    bg = function(buffer) if not buffer.is_focused then return colors.belafonte.blue2 end return nil end,
+    bg = function(buffer) if not buffer.is_focused then return palette.surface_light end return nil end,
     delete_buffer_on_left_click = true,
     truncation = { priority = 1 },
   },
@@ -130,8 +130,9 @@ require('cokeline').setup({
     fg = function(buffer)
       return
         buffer.is_focused
-        and get_hex('Normal', 'fg')
-        or get_hex('Comment', 'fg')
+        and get_hex('Comment', 'fg')
+        or palette.highlight_med
+        --or get_hex('Normal', 'fg')
     end,
     bg = get_hex('ColorColumn', 'bg'),
   },

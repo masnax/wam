@@ -97,7 +97,7 @@ options.mode = {
     return options.mode_colors[vim.fn.mode()][1]
    end,
    hl = {bg = colors.fire.red1, fg = colors.baroque.brown1},
-   right_sep = {str = options.separator_style.right, hl = {fg = colors.fire.red1, bg=colors.belafonte.blue1 }},
+   right_sep = {str = options.separator_style.right, hl = {fg = colors.fire.red1, bg=palette.highlight_low }},
 }
 
 options.file_name = {
@@ -128,19 +128,19 @@ options.diff = {
    add = {
       provider = "git_diff_added",
       icon = "  ",
-      hl = {fg = colors.belafonte.white1, bg = colors.fire.purple3 },
+      hl = {fg = colors.belafonte.white1, bg = palette.highlight_higher },
    },
 
    change = {
       provider = "git_diff_changed",
       icon = "  ",
-      hl = {fg = colors.belafonte.white1, bg = colors.fire.purple3 },
+      hl = {fg = colors.belafonte.white1, bg = palette.highlight_higher },
    },
 
    remove = {
       provider = "git_diff_removed",
       icon = "  ",
-      hl = {fg = colors.belafonte.white1, bg = colors.fire.purple3 },
+      hl = {fg = colors.belafonte.white1, bg = palette.highlight_higher },
    },
 
 }
@@ -149,8 +149,8 @@ options.git_branch = {
    provider = function()
     return " "..(vim.b.gitsigns_head or ''), ''
   end,
-   hl = {bg = colors.fire.orange1, fg = colors.fire.black1},
-   left_sep = {str = options.separator_style.left, hl = {fg = colors.fire.orange1, bg=colors.fire.purple3 }},
+   hl = {bg = palette.highlight_med, fg = palette.foam},
+   left_sep = {str = options.separator_style.left, hl = {fg = palette.highlight_med, bg=palette.highlight_higher }},
 }
 
 options.diagnostic = {
@@ -162,7 +162,7 @@ options.diagnostic = {
 
       icon = "  ",
 
-      hl = {bg = colors.belafonte.blue1 },
+      hl = {bg = palette.highlight_low },
    },
 
    warning = {
@@ -171,7 +171,7 @@ options.diagnostic = {
          return options.lsp.diagnostics_exist(options.lsp_severity.WARN)
       end,
       icon = "  ",
-      hl = {bg = colors.belafonte.blue1 },
+      hl = {bg = palette.highlight_low },
    },
 
    hint = {
@@ -180,7 +180,7 @@ options.diagnostic = {
          return options.lsp.diagnostics_exist(options.lsp_severity.HINT)
       end,
       icon = "  ",
-      hl = {bg = colors.belafonte.blue1 },
+      hl = {bg = palette.highlight_low },
    },
 
    info = {
@@ -189,7 +189,7 @@ options.diagnostic = {
          return options.lsp.diagnostics_exist(options.lsp_severity.INFO)
       end,
       icon = "  ",
-      hl = {bg = colors.belafonte.blue1 },
+      hl = {bg = palette.highlight_low },
    },
 }
 
@@ -224,17 +224,17 @@ options.empty_space = {
 }
 options.empty_space_right = {
    provider = options.separator_style.right,
-   hl = {bg = 'none', fg = colors.belafonte.blue1},
+   hl = {bg = 'none', fg = palette.highlight_low},
 }
 
 options.empty_space_left = {
    provider = options.separator_style.left,
-   hl = {bg = colors.fire.orange1, fg = colors.belafonte.blue1},
+   hl = {bg = palette.highlight_med, fg = palette.highlight_low},
 }
 
 options.empty_space_left2 = {
    provider = options.separator_style.left,
-   hl = {bg = 'none', fg = colors.fire.purple3},
+   hl = {bg = 'none', fg = palette.highlight_higher},
 }
 
 options.current_line = {
@@ -245,7 +245,7 @@ options.current_line = {
       return current_line .. "/" .. total_line .. " "
    end,
 
-  hl = {fg = colors.tangerine.yellow2, bg = colors.belafonte.blue1},
+  hl = {fg = colors.tangerine.yellow2, bg = palette.highlight_low},
 }
 
 options.position = {
@@ -256,7 +256,7 @@ options.position = {
 
     return string.format('%s%03d', options.separator_style.position_icon, col)
   end,
-  left_sep = {str = options.separator_style.left, hl = {fg = colors.fire.red1, bg=colors.belafonte.blue1 }},
+  left_sep = {str = options.separator_style.left, hl = {fg = colors.fire.red1, bg=palette.highlight_low }},
   hl = {bg = colors.fire.red1, fg = colors.baroque.brown1},
 }
 

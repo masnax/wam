@@ -1,14 +1,36 @@
+-- Use catppuccin as a fallback.
 require'catppuccin'.setup()
+-- Get standard colors
+require'palettes.colors'
+
+-- Append custom palettes to rose-pine.
+local m = require('rose-pine.theme')
+local c = m.get
+m.get = function(config)
+  package.loaded['rose-pine.palette'] = require('palettes.fire')
+  return c(config)
+end
+
 require'rose-pine'.setup({
-  disable_italics = true,
-  --disable_background = true,
+--  disable_italics = true,
+--  disable_background = true,
 })
 
 vim.cmd([[
+autocmd BufWinEnter *  if &ft == '' | :ColorizerAttachToBuffer
 colo catppuccin
 colo rose-pine
 luafile $HOME/.cache/nvim/colorscheme-edits
 ]])
+
+_G.list_acs = function()
+print("Triggered Autocommands:")
+for cmd in vim.fn.split(vim.fn.execute('autocmd'), "\n") do
+  if string.match(cmd, 'triggered') then
+    print(cmd)
+  end
+end
+end
 
 _G.dump = function(o)
   local function dump2(o)
@@ -29,6 +51,7 @@ _G.dump = function(o)
   print(dump2(o))
 end
 
+-- lua hi(false, "TSVariable", {fg = "#000000", style = "bold,italic,underline"})
 _G.hi = function(save, group, gui)
   local fg = gui.fg or get_color(group, "fg#") or "none"
   local bg = gui.bg or get_color(group, "bg#") or "none"
@@ -76,139 +99,74 @@ _G.get_color = function(g, t)
   return color
 end
 
-_G.colors = {
-  renaissance = {
-    black = "#1E231D",
-    grey = "#616E77",
-    greengrey = "#303730",
-    bluegrey = "#5C677B",
-    green1 = "#606046",
-    green2 = "#608246",
-    green3 = "#658440",
-    green4 = "#698763",
-    green5 = "#6D8467",
-    green6 = "#738E57",
-    green7 = "#929B7C",
-    blue1 = "#78A9B7",
-    blue2 = "#5B9EA6",
-    blue3 = "#5F98B6",
-    blue4 = "#6087A4",
-    yellow1 = "#E7D9AA",
-    yellow2 = "#CD9C5A",
-    brown1 = "#A4845B",
-    brown2 = "#7D6C5A",
-    brown3 = "#6A5343",
-    brown4 = "#5F3930",
-    brown5 = "#6D4A46",
-    red1 = "#9A5045",
-    red2 = "#BC7062",
-    red3 = "#C5917C",
-    orange1 = "#B6845F",
-    orange2 = "#BA6F38",
-    orange3 = "#CD825A",
-    orange4 = "#D49572",
-    orange5 = "#DEA175",
-    orange6 = "#ECC0A5",
-  },
+_G.get_hl = function()
+  local M = require("nvim-treesitter-playground.hl-info")
+  local highlighter = require "vim.treesitter.highlighter"
+  local utils = require "nvim-treesitter-playground.utils"
+  local buf = vim.api.nvim_get_current_buf()
+  local result = {}
 
-  baroque = {
-    grey = "#71726C",
-    black = "#231F20",
-    greenblack = "#26281D",
-    green1 = "#2A7771",
-    green2 = "#414A35",
-    green3 = "#475138",
-    green4 = "#4A5022",
-    green5 = "#4B4E21",
-    green6 = "#596A62",
-    green7 = "#5B7955",
-    green8 = "#C2C76B",
-    brown1 = "#30261A",
-    brown2 = "#674A3C",
-    brown3 = "#603D1D",
-    brown4 = "#553830",
-    brown5 = "#4E2E1F",
-    brown6 = "#61312D",
-    brown7 = "#724C28",
-    brown8 = "#7D5941",
-    brown9 = "#8E5721",
-    brown10 = "#9B5B37",
-    brown11 = "#A35D43",
-    red1 = "#782B19",
-    red2 = "#841617",
-    red3 = "#841A1E",
-    red4 = "#AC2023",
-    red5 = "#BC5228",
-    orange1 = "#D97F27",
-    orange2 = "#B9905C",
-    yellow1 = "#BB882C",
-    yellow2 = "#D19A3F",
-    yellow4 = "#B4934E",
-    yellow5 = "#D7B262",
-    yellow6 = "#D3AF71",
-    yellow7 = "#FFCA60",
-    yellow8 = "#F7D990",
-    white1 = "#EED09C",
-    white2 = "#F5E5C3",
-    white3 = "#FFFCDD",
-  },
-  tangerine = {
-    black0 = "#200000",
-    black1 = "#141415",
-    grey0 = "#3B4252",
-    grey1 = "#434C5E",
-    grey2 = "#4C566A",
-    grey3 = "#616E88",
-    white0 = "#E5E9F0",
-    white1 = "#ECEFF4",
-    green0 = "#AFFFDF",
-    green1 = "#8FBCBB",
-    green2 = "#517777",
-    green3 = "#81A7A7",
-    blue0 = "#5FB1FF",
-    blue1 = "#4F81AC",
-    blue2 = "#868062",
-    blue3 = "#40E0E0",
-    blue4 = "#2f6f9a",
-    purple0 = "#4F50A0",
-    purple1 = "#AF9FEA",
-    red0 = "#ab1b5a",
-    red1 = "#c02040",
-    red2 = "#BF616A",
-    orange0 = "#F85E5E",
-    orange1 = "#FF7A0E",
-    orange2 = "#D08770",
-    yellow0 = "#e08e33",
-    yellow1 = "#F3A760",
-    yellow2 = "#FFBB7B",
-  },
-  belafonte = {
-    black = "#20111a",
-    grey1 = "#98999c",
-    grey2 = "#958b83",
-    white1 = "#d4ccb9",
-    red1 = "#bd100d",
-    green1 = "#858062",
-    yellow1 = "#e9a448",
-    blue1 = "#416978",
-    blue2 = "#292734",
-    brown1 = "#96522b",
-    brown2 = "#45363b",
-    brown3 = "#5e5252",
-  },
-  fire = {
-    black1 = "#212123",
-    purple1 = "#AB6192",
-    purple2 = "#8a7096",
-    purple3 = "#6a5076",
-    white1 = "#E1A1A4",
-    pink1 = "#CC4D5F",
-    orange1 = "#E9674A",
-    orange2 = "#d04f2A",
-    red1 = "#D53A4C",
-    yellow1 = "#FB9D5A",
-    brown1 = "#A76255",
-    grey1 = "#423746",
-    grey2 = "#493C48",
-  }
-}
+  local function add_to_result(matches, source)
+    if #matches == 0 then
+      return
+    end
+
+    table.insert(result, "# " .. source)
+
+    for _, match in ipairs(matches) do
+      table.insert(result, match)
+    end
+  end
+
+  if highlighter.active[buf] then
+
+    local get_matches = function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+      row = row - 1
+
+      local results = utils.get_hl_groups_at_position(bufnr, row, col)
+      local highlights = {}
+      for _, hl in pairs(results) do
+        local color = vim.api.nvim_get_hl_by_name("@"..hl.capture, {})
+        local hl_info = ""
+        for field, value in pairs(color) do
+          if value ~= nil then
+
+
+             if field == "foreground" or field == "background" then
+              value = string.format("#%06x", value)
+             end
+
+            hl_info = hl_info .. "\n" .. "  - " .. tostring(field) .. ": " .. tostring(value)
+          end
+        end
+
+        local line = "* **@" .. hl.capture .. "**"
+        if hl.priority then
+          line = line .. "(" .. hl.priority .. ")"
+        end
+
+        if hl_info ~= "" then
+          line = line .. ": " .. hl_info
+        end
+        table.insert(highlights, line)
+      end
+      return highlights
+    end
+
+    local matches = get_matches()
+    add_to_result(matches, "Treesitter")
+  end
+
+  if vim.b.current_syntax ~= nil or #result == 0 then
+    local matches = M.get_syntax_hl()
+    add_to_result(matches, "Syntax")
+  end
+
+  if #result == 0 then
+    table.insert(result, "* No highlight groups found")
+  end
+
+  vim.lsp.util.open_floating_preview(result, "markdown", { border = "single", pad_left = 4, pad_right = 4 })
+end
