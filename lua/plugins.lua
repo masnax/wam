@@ -2,57 +2,50 @@
 
 return require('packer').startup(function(use)
   -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
+  use { 'wbthomason/packer.nvim'}
 
-  -- Coq
-  use { 'ms-jpq/coq_nvim',  branch = 'coq'}
-  use { 'ms-jpq/coq.artifacts', branch = 'artifacts'}
-  use { 'ms-jpq/chadtree', branch = 'chad',
-    config = function()
-      vim.api.nvim_set_var("chadtree_settings", {
-        ["keymap.trash"] = {},
-        ["keymap.tertiary"] = {"t"},
-        ["keymap.quit"] = {"q", ";'", "';"},
-        ["keymap.collapse"] = {"<s-tab>","<s-up>"},
-        ["keymap.Change_focus_up"] = {"C", "<m-up>"},
-        ["keymap.change_focus"] = {"c", "<m-down>"},
-        ["keymap.secondary"] = {"Space", "<s-enter>"},
-        ["theme.icon_colour_set"] = "none",
-      })
-    end
-  }
+  use { 'neovim/nvim-lspconfig' } -- Collection of configurations for the built-in LSP client
 
-  -- LSP
-  use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
-  use 'ray-x/lsp_signature.nvim'
-  use 'ray-x/go.nvim'
-  -- use {'ray-x/starry.nvim'}
-  -- use {'masnax/navigator.lua', branch = 'edits', requires = {'masnax/guihua.lua', branch = 'edits', run = 'cd lua/fzy && make'}}
-  use {"https://git.sr.ht/~whynothugo/lsp_lines.nvim"}
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use { 'nvim-treesitter/nvim-treesitter-textobjects' }
+  use { 'nvim-treesitter/nvim-treesitter-refactor' }
+  use { 'nvim-treesitter/playground' }
 
-
-
-  -- Search
   use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/plenary.nvim'}}
   use {'nvim-telescope/telescope-file-browser.nvim'}
-  use {'debugloop/telescope-undo.nvim'}
 
-  -- Colorscheme
-  use 'norcalli/nvim-colorizer.lua'
+  use {'debugloop/telescope-undo.nvim'}
+  use { 'RRethy/nvim-treesitter-textsubjects' }
+
+  use { 'ms-jpq/coq_nvim',  branch = 'coq'}
+  use { 'ms-jpq/coq.artifacts', branch = 'artifacts'}
+  use { 'ray-x/lsp_signature.nvim' }
+  use { 'ray-x/go.nvim' }
+  use { "https://git.sr.ht/~whynothugo/lsp_lines.nvim" }
+  use { 'norcalli/nvim-colorizer.lua'}
   use { 'folke/paint.nvim' }
   use { 'masnax/sunset-vim' }
   use { 'kyazdani42/nvim-web-devicons' }
   use { 'lambdalisue/glyph-palette.vim' }
+  use { 'rose-pine/neovim', as = 'rose-pine' }
+  use { "catppuccin/nvim", as = "catppuccin" }
+  use { 'anuvyklack/pretty-fold.nvim', requires = {"anuvyklack/nvim-keymap-amend"} }
+  use { 'jghauser/fold-cycle.nvim' }
+  use { 'windwp/nvim-autopairs' }
+  use { 'SmiteshP/nvim-gps' }
+  use { 'mrjones2014/nvim-ts-rainbow' }
+  use {'lewis6991/gitsigns.nvim'}
+  use { 'lukas-reineke/indent-blankline.nvim' }
+
+  use { 'noib3/nvim-cokeline', requires = 'kyazdani42/nvim-web-devicons' }
+  use { 'feline-nvim/feline.nvim' }
+  use { 'folke/noice.nvim', requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" } }
+  use { "jackMort/ChatGPT.nvim", requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } }
+
   use { 'CosmicNvim/cosmic-ui',
     requires = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
     config = function() require('cosmic-ui').setup() end
   }
-  use({
-    "catppuccin/nvim",
-    as = "catppuccin"
-  })
-
-  use({ 'rose-pine/neovim', as = 'rose-pine' })
 
   use { 'phaazon/hop.nvim',
     config = function()
@@ -63,25 +56,4 @@ return require('packer').startup(function(use)
       require'hop'.setup({keys = "asdfghjklqwertyuiopzxcvbnm"})
     end
   }
-  use{ 'anuvyklack/pretty-fold.nvim', requires = {"anuvyklack/nvim-keymap-amend"} }
-  use { 'jghauser/fold-cycle.nvim' }
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use { 'nvim-treesitter/nvim-treesitter-textobjects' }
-  use { 'nvim-treesitter/nvim-treesitter-refactor' }
-  use { 'nvim-treesitter/playground' }
-  use { 'RRethy/nvim-treesitter-textsubjects' }
-  use { 'windwp/nvim-autopairs' }
-  use { 'SmiteshP/nvim-gps' }
-  use { 'p00f/nvim-ts-rainbow' }
-  use {'lewis6991/gitsigns.nvim'}
-  use { 'lukas-reineke/indent-blankline.nvim' }
-
-
-  -- Menus
-  use { 'noib3/nvim-cokeline', requires = 'kyazdani42/nvim-web-devicons' }
-  use { 'feline-nvim/feline.nvim' }
-  use{ 'folke/noice.nvim', requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" } }
-
-
-  use { "jackMort/ChatGPT.nvim", requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } }
 end)
