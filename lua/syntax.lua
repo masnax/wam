@@ -65,7 +65,7 @@ for _, lsp in pairs(servers) do
       local lsp_opts = { noremap=true, silent=true }
       vim.api.nvim_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_prev({float=false})<CR>', lsp_opts)
       vim.api.nvim_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.goto_next({float=false})<CR>', lsp_opts)
-      vim.api.nvim_set_keymap('n', 'E', '<cmd>lua vim.diagnostic.open_flat()<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', 'E', '<cmd>lua vim.diagnostic.open_float()<CR>', lsp_opts)
       vim.api.nvim_set_keymap('n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', lsp_opts)
       vim.api.nvim_set_keymap('n', 'C', '<cmd>lua vim.lsp.buf.code_action()<CR>', lsp_opts)
 
@@ -105,7 +105,8 @@ require'lsp_lines'.setup()
 
 vim.diagnostic.config({
   virtual_text = false,
-  virtual_lines = true,
+  virtual_lines = {only_current_line = true},
+  float = {border = "rounded"},
 })
 
 require'indent_blankline'.setup {
