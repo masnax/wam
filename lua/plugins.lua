@@ -17,8 +17,6 @@ return require('packer').startup(function(use)
   use {'debugloop/telescope-undo.nvim'}
   use { 'RRethy/nvim-treesitter-textsubjects' }
 
-  use { 'ms-jpq/coq_nvim',  branch = 'coq'}
-  use { 'ms-jpq/coq.artifacts', branch = 'artifacts'}
   use { 'ray-x/lsp_signature.nvim' }
   use { 'ray-x/go.nvim' }
   use { "https://git.sr.ht/~whynothugo/lsp_lines.nvim" }
@@ -56,4 +54,15 @@ return require('packer').startup(function(use)
       require'hop'.setup({keys = "asdfghjklqwertyuiopzxcvbnm"})
     end
   }
+
+  use { 'hrsh7th/nvim-cmp', requires = {
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lsp-signature-help',
+    'onsails/lspkind-nvim',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip',
+  }}
 end)
