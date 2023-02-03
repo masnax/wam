@@ -23,8 +23,8 @@ require'nvim-treesitter.configs'.setup {
 }
 
 
-local npairs =V require('nvim-autopairs')
 local cmp = require'cmp'
+local handlers = require('nvim-autopairs.completion.handlers')
 cmp.setup({
   snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end},
   window = {
@@ -65,7 +65,6 @@ cmp.setup({
   )
 })
 
-cmp.event:on('confirm_done', require'nvim-autopairs.completion.cmp'.on_confirm_done())
 cmp.setup.cmdline({'/','?'}, {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {{ name = 'buffer' }}
@@ -153,3 +152,10 @@ require'paint'.setup {
     },
   },
 }
+
+require('nvim-autopairs').setup()
+cmp.event:on(
+  'confirm_done',
+  require'nvim-autopairs.completion.cmp'.on_confirm_done()
+)
+
