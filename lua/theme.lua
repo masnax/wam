@@ -5,8 +5,8 @@ require'palettes.colors'
 
 -- Append custom palettes to rose-pine.
 local m = require('rose-pine.theme')
-local c = m.get
-m.get = function(config)
+local c = m._load
+m._load = function(config)
   package.loaded['rose-pine.palette'] = require('palettes.fire')
   return c(config)
 end
