@@ -1,7 +1,7 @@
 require('go').setup({
   gofmt = 'gofmt',
   goimport = 'goimports',
-  max_line_len = 1000,
+  max_line_len = 10000,
 
 --  disable_defaults = false, -- true|false when true set false to all boolean settings and replace all table
 --  -- settings with {}

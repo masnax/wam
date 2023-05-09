@@ -1,5 +1,5 @@
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "go", "lua", "bash" },
+  ensure_installed = { "go", "lua", "bash", "vim", "regex", "markdown", "markdown_inline" },
   sync_install = false,
   highlight = {enable = true},
   indent = {enable = true},
@@ -89,6 +89,10 @@ for _, lsp in pairs(servers) do
       vim.api.nvim_set_keymap('n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', lsp_opts)
       vim.api.nvim_set_keymap('n', 'C', '<cmd>lua vim.lsp.buf.code_action()<CR>', lsp_opts)
 
+      if client.server_capabilities.documentSymbolProvider then
+        require'nvim-navic'.attach(client, bufnr)
+      end
+
       if client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_exec(
           [[
@@ -120,7 +124,6 @@ end
 
 
 require'lsp_signature'.setup({toggle_key = "<C-_>", auto_close_after = 3})
-require'nvim-gps'.setup()
 require'lsp_lines'.setup()
 
 vim.diagnostic.config({

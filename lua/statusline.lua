@@ -196,7 +196,7 @@ options.diagnostic = {
 options.nvim_gps = {
    provider = function()
       -- nvim-gps loads at cursorMoved so need to handle this
-      local gps_loaded, gps = pcall(require, "nvim-gps")
+      local gps_loaded, gps = pcall(require, "nvim-navic")
 
       if not gps_loaded then
          return
@@ -206,7 +206,7 @@ options.nvim_gps = {
    end,
 
    enabled = function()
-      local gps_loaded, gps = pcall(require, "nvim-gps")
+      local gps_loaded, gps = pcall(require, "nvim-navic")
 
       if not gps_loaded then
          return false

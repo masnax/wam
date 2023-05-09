@@ -68,6 +68,7 @@ map ' <Nop>
 :nnoremap cc :lua get_hl()<CR>
 :nnoremap CC :ColorizerToggle<CR>
 :nnoremap <Esc> :silent! noh<CR>
+:nnoremap ;; :Telescope smart_open<cr>
 :nnoremap ;; :Telescope file_browser path=%:p:h<cr>
 :nnoremap U :Telescope undo<cr>
 :nnoremap q: <nop>

@@ -30,13 +30,14 @@ return require('packer').startup(function(use)
   use { 'anuvyklack/pretty-fold.nvim', requires = {"anuvyklack/nvim-keymap-amend"} }
   use { 'jghauser/fold-cycle.nvim' }
   use { 'windwp/nvim-autopairs' }
-  use { 'SmiteshP/nvim-gps' }
+  use { 'SmiteshP/nvim-navic' }
   use { 'mrjones2014/nvim-ts-rainbow' }
   use {'lewis6991/gitsigns.nvim'}
   use { 'lukas-reineke/indent-blankline.nvim' }
+  use { 'danielfalk/smart-open.nvim', branch = "0.1.x", requires = {"kkharji/sqlite.lua"} }
 
   use { 'noib3/nvim-cokeline', requires = 'kyazdani42/nvim-web-devicons' }
-  use { 'feline-nvim/feline.nvim' }
+  use { 'freddiehaddad/feline.nvim' }
   use { 'folke/noice.nvim', requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" } }
   use { "jackMort/ChatGPT.nvim", requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } }
 
