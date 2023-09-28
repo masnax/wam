@@ -1,4 +1,4 @@
-local get_hex = require('cokeline/utils').get_hex
+local get_hex = require('cokeline/hlgroups').get_hl_attr
 local mappings = require('cokeline/mappings')
 
 local errors_fg = get_hex('DiagnosticError', 'fg')
