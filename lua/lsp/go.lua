@@ -2,6 +2,16 @@ require('go').setup({
   gofmt = 'gofmt',
   goimport = 'goimports',
   max_line_len = 10000,
+})
+
+-- Set the quickfix command in the go.filetype augroup to do nothing.
+vim.cmd([[
+  augroup go.filetype
+    autocmd!
+    autocmd FileType go setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    autocmd FileType go au QuickFixCmdPost  *  :silent! echo
+  augroup end
+]])
 
 --  disable_defaults = false, -- true|false when true set false to all boolean settings and replace all table
 --  -- settings with {}
@@ -91,4 +101,3 @@ require('go').setup({
 --  luasnip = false, -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
 --  --  Do not enable this if you already added the path, that will duplicate the entries
 
-})
