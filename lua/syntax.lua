@@ -24,7 +24,6 @@ require'nvim-treesitter.configs'.setup {
 
 
 local cmp = require'cmp'
-local handlers = require('nvim-autopairs.completion.handlers')
 cmp.setup({
   snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end},
   window = {
@@ -132,14 +131,11 @@ vim.diagnostic.config({
   float = {border = "rounded"},
 })
 
-require'indent_blankline'.setup {
-  show_current_context = true,
-  context_char = '┃',
---  context_char = '⋅',
-  char = "",
-}
-
-vim.cmd [[highlight IndentBlanklineContextChar guifg=#292734]]
+vim.cmd [[highlight IblScope guifg=#292734]]
+require'ibl'.setup({
+  scope = { char = "┃", highlight = {"IblScope"} },
+  indent = { char = " ", },
+})
 
 require'paint'.setup {
   highlights = {
@@ -156,7 +152,10 @@ require'paint'.setup {
   },
 }
 
-require('nvim-autopairs').setup()
+require('nvim-autopairs').setup({
+  check_ts = true,
+  ts_config = { bash = false, shell = false, sh = false },
+})
 cmp.event:on(
   'confirm_done',
   require'nvim-autopairs.completion.cmp'.on_confirm_done()
