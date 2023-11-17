@@ -11,6 +11,7 @@ vim.opt.hidden = true
 vim.opt.undodir = vim.env.HOME.."/.cache/nvim/undo"
 vim.opt.undofile = true
 vim.opt.cursorline = true
+vim.opt.timeoutlen = 250
 
 -- Autocmds
 vim.cmd([[
