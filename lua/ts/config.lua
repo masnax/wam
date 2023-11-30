@@ -152,6 +152,14 @@ require('telescope').setup({
       mappings = {
         i = {
           ["<C-Space>"] = open_in_hover,
+          ["<CR>"] = function(prompt_bufnr, dir)
+            local entry = action_state.get_selected_entry()
+            if entry and entry.Path:is_dir() then
+              fb_actions.open_dir(prompt_bufnr, "default")
+            else
+              telescope_custom_actions.multi_selection_open(prompt_bufnr)
+            end
+          end,
         },
         n = {
           ["c"] = fb_actions.change_cwd,
