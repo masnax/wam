@@ -67,6 +67,7 @@ map ' <Nop>
 :noremap ;' :bn<CR>
 :noremap '; :bp<CR>
 :nnoremap cc :lua get_hl()<CR>
+:nnoremap ff :filetype detect<CR>
 :nnoremap CC :ColorizerToggle<CR>
 :nnoremap <Esc> :silent! noh<CR>
 :nnoremap ;; :Telescope smart_open<cr>
@@ -75,6 +76,8 @@ map ' <Nop>
 :nnoremap q: <nop>
 :nnoremap q/ <nop>
 :nnoremap qq <nop>
+:inoremap <S-Up> <Nop>
+:inoremap <S-Down> <Nop>
 
 
 function! JumpToNextWord()
