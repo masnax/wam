@@ -4,11 +4,11 @@ require'catppuccin'.setup()
 require'palettes.colors'
 
 -- Append custom palettes to rose-pine.
-local m = require('rose-pine.theme')
-local c = m._load
-m._load = function(config)
+local m = require('rose-pine')
+local c = m.colorscheme
+m.colorscheme = function(variant)
   package.loaded['rose-pine.palette'] = require('palettes.fire')
-  return c(config)
+  return c(variant)
 end
 
 require'rose-pine'.setup({

@@ -1,4 +1,6 @@
 
+require'palettes.fire'
+
 local options = {
   lsp = require "feline.providers.lsp",
   lsp_severity = vim.diagnostic.severity,
