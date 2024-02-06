@@ -7,7 +7,7 @@ require'gitsigns'.setup {
     changedelete = {hl = 'GitSignsChange', text = '█', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
   },
   current_line_blame = true,
-  current_line_blame_formatter = '  ❯❯❯ (<author>, <author_time:%R>) <summary>',
+  current_line_blame_formatter = '  ❯❯❯ <abbrev_sha> (<author>, <author_time:%R>) <summary>',
   current_line_blame_opts = {delay = 500},
   on_attach = function(bufnr)
     local function map(mode, lhs, rhs, opts)
