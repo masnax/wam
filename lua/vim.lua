@@ -15,10 +15,14 @@ vim.opt.timeoutlen = 250
 
 function go_imports()
   vim.cmd([[
-      :silent! GoFmt
-      :silent! GoImport
+      undojoin | :silent! GoFmt
+      undojoin | :silent! GoImport
+      undojoin | :silent! lua clean_imports()
       ]])
 
+end
+
+function clean_imports()
   local start_pattern = "^\\s*import ($"
   local end_pattern = "^\\s*)$"
   local lxd_pattern = "\\s*lxd \"github.com/canonical/lxd/client\"$"
@@ -56,7 +60,7 @@ vim.cmd([[
   	autocmd!
   "	autocmd BufWritePost *.go :silent! lua vim.lsp.buf.formatting()
   "	autocmd BufWritePre *.go :silent! lua OrgImports(1000)
-  	autocmd BufWritePre *.go :silent! lua go_imports()
+  	autocmd BufWritePre *.go undojoin | silent! lua go_imports()
   augroup END
 
   augroup WHITESPACE
