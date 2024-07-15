@@ -24,6 +24,7 @@ local variants = {
 
     -- Used for inactive buflines.
     --surface_light = '#27222f',--colors.belafonte.blue2,
+    lighter_red = '#aa6a8a',
     surface_light = "#141415",
 	},
 	moon = {

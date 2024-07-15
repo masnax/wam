@@ -48,10 +48,14 @@ local components = {
            or buffer.devicon.icon
     end,
     fg = function(buffer)
+      if not buffer.is_focused then
+        return palette.highlight_med
+      else
       return
         (mappings.is_picking_focus() and yellow)
         or (mappings.is_picking_close() and red)
         or buffer.devicon.color
+      end
     end,
     style = function(_)
       return
@@ -130,8 +134,8 @@ require('cokeline').setup({
     fg = function(buffer)
       return
         buffer.is_focused
-        and get_hex('Comment', 'fg')
-        or palette.highlight_med
+        and palette.foam
+        or palette.highlight_highest
         --or get_hex('Normal', 'fg')
     end,
     bg = get_hex('ColorColumn', 'bg'),
