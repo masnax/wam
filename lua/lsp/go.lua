@@ -1,7 +1,7 @@
 require('go').setup({
-  gofmt = 'gofmt',
-  goimport = 'goimports',
-  max_line_len = 10000,
+--  gofmt = 'gofmt',
+  goimports = 'goimports',
+--  max_line_len = 10000,
 })
 
 -- Set the quickfix command in the go.filetype augroup to do nothing.
