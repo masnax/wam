@@ -161,3 +161,4 @@ cmp.event:on(
   require'nvim-autopairs.completion.cmp'.on_confirm_done()
 )
 
+require("inc_rename").setup()

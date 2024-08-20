@@ -111,6 +111,7 @@ map ' <Nop>
 :inoremap <S-Up> <Nop>
 :inoremap <S-Down> <Nop>
 :xnoremap p pgvy
+:nnoremap RR :IncRename <space>
 
 
 function! JumpToNextWord()

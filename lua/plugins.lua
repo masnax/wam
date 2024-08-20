@@ -38,6 +38,7 @@ return require('packer').startup(function(use)
   use {'lewis6991/gitsigns.nvim'}
   use { 'lukas-reineke/indent-blankline.nvim' }
   use { 'danielfalk/smart-open.nvim', branch = "0.1.x", requires = {"kkharji/sqlite.lua"} }
+  use { 'smjonas/inc-rename.nvim' }
 
   use { 'noib3/nvim-cokeline', requires = 'kyazdani42/nvim-web-devicons' }
   use { 'freddiehaddad/feline.nvim' }
