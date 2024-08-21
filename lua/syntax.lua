@@ -131,11 +131,44 @@ vim.diagnostic.config({
   float = {border = "rounded"},
 })
 
-vim.cmd [[highlight IblScope guifg=#292734]]
+vim.cmd([[
+hi IblScope  guifg=#40304a
+hi IblIndent guifg=#1c1c2d
+]])
+
 require'ibl'.setup({
-  scope = { char = "┃", highlight = {"IblScope"} },
-  indent = { char = " ", },
+  scope = { char = "┃", highlight = {"IblScope"}, show_start = true, show_end = true},
+  indent = { char = "▏", highlight = {"IblIndent"}},
+  whitespace = {},
 })
+
+function ibl_sed()
+    local ibl = require'ibl.scope'
+    local cfg = require'ibl.config'
+    local bufnr = vim.api.nvim_get_current_buf()
+    local node = ibl.get(bufnr, cfg.default_config)
+
+    local s = node:start() + 1
+    local e = node:end_() + 1
+
+    local sed_range = string.format(':%s,%ss/', s,e)
+    -- Temporarliy highlight the line as red
+    local old_scope_hl = vim.api.nvim_get_hl(0, {name = 'IblScope'})
+    vim.api.nvim_set_hl(0, "@ibl.scope.char.1", {fg=palette.gold})
+
+
+    vim.cmd('call feedkeys("'..sed_range..'")')
+
+    -- reset the line color on dialog exit
+    vim.cmd(string.format([[
+        augroup TempHighlightChange
+            autocmd CmdlineLeave * hi @ibl.scope.char.1 guifg='#%x'
+            autocmd CmdlineLeave * augroup! TempHighlightChange
+        augroup END
+    ]], old_scope_hl.fg))
+end
+
+vim.api.nvim_set_keymap('n', 'S', '<cmd>lua ibl_sed()<CR>', { noremap = true, silent = true })
 
 require'paint'.setup {
   highlights = {
