@@ -30,7 +30,7 @@ return require('packer').startup(function(use)
   use { 'lambdalisue/glyph-palette.vim' }
   use { 'rose-pine/neovim', as = 'rose-pine' }
   use { "catppuccin/nvim", as = "catppuccin" }
-  use { 'anuvyklack/pretty-fold.nvim', requires = {"anuvyklack/nvim-keymap-amend"} }
+  use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
   use { 'jghauser/fold-cycle.nvim' }
   use { 'windwp/nvim-autopairs' }
   use { 'SmiteshP/nvim-navic' }

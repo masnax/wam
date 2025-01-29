@@ -52,14 +52,25 @@ cmp.setup({
     }),
   },
 
+  matching = {
+    disallow_partial_fuzzy_matching = true,
+  },
+
+  completion = {
+    keyword_length = 1,
+  },
+
   --sources = cmp.config.sources({},{}),
   sources = cmp.config.sources(
     {
       { name = 'nvim_lsp' },
       { name = 'nvim_lsp_signature_help' },
+      { name = 'nvim_lsp_document_symbol' },
       { name = 'path' },
+      { name = "fuzzy_buffer" },
     },
     {
+      { name = "buffer" },
     }
   )
 })
@@ -76,6 +87,12 @@ cmp.setup.cmdline(':', {
 
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+--local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
+
 local servers = {'gopls', "bashls" }
 for _, lsp in pairs(servers) do
   require'lspconfig'[lsp].setup({
