@@ -1,16 +1,33 @@
+local ts = require('telescope.builtin')
+local function nnoremap(key, func)
+  vim.keymap.set('n', key, func, {noremap = true, silent = true})
+end
+
 vim.cmd([[
-:nnoremap // :lua require('telescope.builtin').live_grep({grep_open_files=true})<CR>
-:nnoremap \\ :lua require('telescope.builtin').live_grep()<CR>
 :nnoremap T :lua require('telescope.builtin').lsp_type_definitions({jump_type="never"})<CR>
-:nnoremap <Space> :lua require('telescope.builtin').def_impl({jump_type="never", fname_width=2000})<CR>
-:nnoremap <Space><Space> :lua require('telescope.builtin').lsp_references({jump_type="never", include_declaration=false, fname_width=2000})<CR>
 :nnoremap EE :lua require('telescope.builtin').diagnostics()<CR>
-:nnoremap '' :lua require('telescope.builtin').lsp_document_symbols()<CR>
 ]])
 
 vim.keymap.set('n', '<Space>g', function()
-  require('telescope.builtin').grep_string({search = vim.fn.input("Grep > "), use_regex = true})
+  ts.grep_string({search = vim.fn.input("Grep > "), use_regex = true})
 end)
+
+nnoremap('<Space>', function()
+  local opts = {jump_type="never", wrap_results=true, show_line=false}
+  opts.entry_maker = go_test_tags(opts)
+  ts.def_impl(opts)
+end)
+
+nnoremap('<Space><Space>', function()
+  local opts = {jump_type="never", include_declaration=false, wrap_results=true, show_line=false}
+  opts.entry_maker = go_test_tags(opts)
+  ts.lsp_references(opts)
+end)
+
+nnoremap('//', function() ts.live_grep({grep_open_files=true, wrap_results=true}) end)
+nnoremap('\\', function() ts.live_grep({wrap_results=true}) end)
+nnoremap("''", function() ts.lsp_document_symbols({wrap_results=true}) end)
+
 
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
@@ -120,12 +137,16 @@ local keymaps = {
     ["<A-UP>"] = actions.preview_scrolling_up,
     ["<A-DOWN>"] = actions.preview_scrolling_down,
     ["<C-Space>"] = open_in_hover,
+    ["<C-L>"] = actions.complete_tag,
+    ["<C-/>"] = actions.which_key,
+    ["<C-_>"] = actions.which_key, -- keys from pressing <C-/>
   },
   n = i,
 }
 
 
 local fb_actions = require "telescope".extensions.file_browser.actions;
+local conf = require("telescope.config").values
 require('telescope').setup({
   defaults = {
     layout_strategy = 'flex',
@@ -144,7 +165,12 @@ require('telescope').setup({
     find_files = { mappings = keymaps },
     live_grep = { mappings = keymaps },
     lsp_type_definitions = { mappings = keymaps },
-    lsp_references = { mappings = keymaps },
+    lsp_references = { mappings = keymaps,
+      sorter = conf.prefilter_sorter {
+        tag = "go_test",
+        sorter = conf.generic_sorter({}),
+      },
+    },
     diagnostics = { mappings = keymaps },
   },
   extensions = {
@@ -156,6 +182,7 @@ require('telescope').setup({
                                        -- the default case_mode is "smart_case"
     },
     file_browser = {
+      prompt_title = vim.fn.getcwd(),
       mappings = {
         i = {
           ["<C-Space>"] = open_in_hover,

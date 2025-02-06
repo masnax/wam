@@ -5,6 +5,18 @@ local make_entry = require "telescope.make_entry"
 local conf = require("telescope.config").values
 
 
+function go_test_tags(opts)
+  return function(entry)
+    vals = make_entry.gen_from_quickfix(opts)(entry)
+    vals.go_test = "test"
+    if not string.match(vals.filename, "_test%.go$") then
+      vals.go_test = "file"
+    end
+    return vals
+  end
+end
+
+
 local function get_locations(locs, action, opts)
   local params = vim.lsp.util.make_position_params(opts.winnr)
   local function lsp_hook_get(err, result, id)
@@ -65,10 +77,13 @@ local def_impl = function(opts)
     prompt_title = "LSP Defs / Impls",
     finder = finders.new_table {
       results = store,
-      entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
+      entry_maker = opts.entry_maker or go_test_tags(opts),
     },
     previewer = conf.qflist_previewer(opts),
-    sorter = conf.generic_sorter(opts),
+    sorter = conf.prefilter_sorter {
+      tag = "go_test",
+      sorter = conf.generic_sorter({}),
+    },
     attach_mappings = function(_, map)
       for k, v in pairs(config.i) do
         if not k == "<CR>" then
