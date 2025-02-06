@@ -7,19 +7,30 @@ require'notify'.setup {
 }
 
 require'noice'.setup {
-  views = {
-    cmdline_popup = {
-      position = { row = "50%", col = "50%", },
-      size = { width = 90, height = "auto", },
+  cmdline = {
+    opts = {
+      position = { row = "65%", col = "50%", },
+      size = { width = "50%", height = "auto", },
     },
---    popupmenu = {
+    format = {
+      edit = { pattern = "^:%s*ed?i?t?%s+", title = vim.fn.getcwd(), icon = "+" }
+    }
+  },
+
+  messages = {
+    enabled = true,
+    -- view = "cmdline" -- comment this line out to enable top right notifications.
+  },
+
+--  popupmenu = {
+--    opts = {
 --      size = { width = 60, height = 15, },
 --      border = { style = "rounded", padding = {0,1 }, },
 --      win_options = {
 --        winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
 --      },
---    },
-  },
+--    }
+--  },
 
   lsp = {
     -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
