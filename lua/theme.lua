@@ -33,14 +33,14 @@ end
 end
 
 _G.dump = function(o)
-  local function dump2(o)
+  local function dump2(o, spaces)
     if type(o) == 'table' then
       local s = '{ '
       for k,v in pairs(o) do
         if type(k) ~= 'number' then k = '"'..k..'"' end
-        s = s .. '['..k..'] = ' .. dump2(v) .. ','
+        s =  s .. '\n' .. string.rep(" ", spaces) ..  '['..k..'] = ' .. dump2(v, spaces + 1) .. ','
       end
-      return s .. '} '
+      return s .. '\n' .. string.rep(" ", spaces - 1) .. '} '
     elseif type(o) == "string" then
       return tostring("\"" .. o .. "\"")
     else
@@ -48,7 +48,7 @@ _G.dump = function(o)
     end
   end
 
-  print(dump2(o))
+  print(dump2(o, 1))
 end
 
 -- lua hi(false, "TSVariable", {fg = "#000000", style = "bold,italic,underline"})
