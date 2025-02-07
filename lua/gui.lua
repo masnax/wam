@@ -3,7 +3,8 @@ require'notify'.setup {
   timeout = 1800,
   top_down = true,
   render = "minimal",
-  stages = "slide",
+--  stages = "slide",
+  stages = "static",
 }
 
 require'noice'.setup {
