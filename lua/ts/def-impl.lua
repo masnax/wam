@@ -8,9 +8,13 @@ local conf = require("telescope.config").values
 function go_test_tags(opts)
   return function(entry)
     vals = make_entry.gen_from_quickfix(opts)(entry)
-    vals.go_test = "test"
-    if not string.match(vals.filename, "_test%.go$") then
-      vals.go_test = "file"
+    vals.go_test = "file"
+    if string.match(vals.filename, "_test%.go$") then
+      vals.go_test = "test"
+    end
+
+    if string.match(vals.filename, "[_/-]mock[_/-]") then
+      vals.go_test = "mock"
     end
     return vals
   end
