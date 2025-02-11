@@ -1,5 +1,5 @@
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "go", "lua", "bash", "vim", "regex", "markdown", "markdown_inline" },
+  ensure_installed = { "go", "lua", "bash", "vim", "regex", "markdown", "markdown_inline", "git_config" },
   sync_install = false,
   highlight = {enable = true},
   indent = {enable = true},
