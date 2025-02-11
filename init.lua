@@ -7,6 +7,7 @@ end
 require("vim")
 require("plugins")
 require("theme")
+require("theme-editor")
 require("syntax")
 require("lsp/go")
 require("ts/def-impl")
