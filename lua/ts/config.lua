@@ -1,4 +1,5 @@
 local ts = require('telescope.builtin')
+local make_entry = require "telescope.make_entry"
 local function nnoremap(key, func)
   vim.keymap.set('n', key, func, {noremap = true, silent = true})
 end
@@ -13,20 +14,25 @@ vim.keymap.set('n', '<Space>g', function()
 end)
 
 nnoremap('<Space>', function()
-  local opts = {jump_type="never", wrap_results=true, show_line=false}
-  opts.entry_maker = go_test_tags(opts)
+  local opts = {jump_type="never", wrap_results=true, show_line=false,  fname_width=2000}
+  opts.entry_maker = go_test_tags(make_entry.gen_from_quickfix(opts), "filename")
   ts.def_impl(opts)
 end)
 
 nnoremap('<Space><Space>', function()
-  local opts = {jump_type="never", include_declaration=false, wrap_results=true, show_line=false}
-  opts.entry_maker = go_test_tags(opts)
+  local opts = {jump_type="never", include_declaration=false, wrap_results=true, show_line=false,  fname_width=2000}
+  opts.entry_maker = go_test_tags(make_entry.gen_from_quickfix(opts), "filename")
   ts.lsp_references(opts)
 end)
 
 nnoremap('//', function() ts.live_grep({grep_open_files=true, wrap_results=true}) end)
-nnoremap('\\', function() ts.live_grep({wrap_results=true}) end)
-nnoremap("''", function() ts.lsp_document_symbols({wrap_results=true}) end)
+--nnoremap('\\', function() ts.live_grep({wrap_results=true}) end)
+nnoremap('\\\\', function()
+  local opts = {hidden=true, find_command = { "rg", "--files", "--color", "never" }}
+  opts.entry_maker = go_test_tags(make_entry.gen_from_file(opts), 1)
+  ts.find_files(opts)
+end)
+nnoremap("''", function() ts.lsp_document_symbols({wrap_results=true, fname_width=2000, symbol_width=50}) end)
 
 
 local actions = require('telescope.actions')
@@ -162,7 +168,12 @@ require('telescope').setup({
     -- layout_config = { horizontal = { prompt_position = "top", }, },
   },
   pickers = {
-    find_files = { mappings = keymaps },
+    find_files = { mappings = keymaps,
+      sorter = conf.prefilter_sorter {
+        tag = "go_test",
+        sorter = conf.generic_sorter({}),
+      },
+    },
     live_grep = { mappings = keymaps },
     lsp_type_definitions = { mappings = keymaps },
     lsp_references = { mappings = keymaps,
