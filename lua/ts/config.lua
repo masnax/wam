@@ -15,21 +15,21 @@ end)
 
 nnoremap('<Space>', function()
   local opts = {jump_type="never", wrap_results=true, show_line=false,  fname_width=2000}
-  opts.entry_maker = go_test_tags(make_entry.gen_from_quickfix(opts), "filename")
+  opts.entry_maker = test_mock_tags(make_entry.gen_from_quickfix(opts), "filename")
   ts.def_impl(opts)
 end)
 
 nnoremap('<Space><Space>', function()
   local opts = {jump_type="never", include_declaration=false, wrap_results=true, show_line=false,  fname_width=2000}
-  opts.entry_maker = go_test_tags(make_entry.gen_from_quickfix(opts), "filename")
+  opts.entry_maker = test_mock_tags(make_entry.gen_from_quickfix(opts), "filename")
   ts.lsp_references(opts)
 end)
 
 nnoremap('//', function() ts.live_grep({grep_open_files=true, wrap_results=true}) end)
 --nnoremap('\\', function() ts.live_grep({wrap_results=true}) end)
 nnoremap('\\\\', function()
-  local opts = {hidden=true, find_command = { "rg", "--files", "--color", "never" }}
-  opts.entry_maker = go_test_tags(make_entry.gen_from_file(opts), 1)
+  local opts = {hidden=true}
+  opts.entry_maker = test_mock_tags(make_entry.gen_from_file(opts), 1)
   ts.find_files(opts)
 end)
 nnoremap("''", function() ts.lsp_document_symbols({wrap_results=true, fname_width=2000, symbol_width=50}) end)
@@ -153,6 +153,9 @@ local keymaps = {
 
 local fb_actions = require "telescope".extensions.file_browser.actions;
 local conf = require("telescope.config").values
+local fzf_sorter = require("telescope").extensions.fzf.native_fzf_sorter
+-- lcocal default_sorter = conf.generic_sorter({})
+local tag_sorter = conf.prefilter_sorter { tag = "test_mock", sorter = fzf_sorter({fuzzy = true, case_mode = "smart_case"}) }
 require('telescope').setup({
   defaults = {
     layout_strategy = 'flex',
@@ -168,20 +171,10 @@ require('telescope').setup({
     -- layout_config = { horizontal = { prompt_position = "top", }, },
   },
   pickers = {
-    find_files = { mappings = keymaps,
-      sorter = conf.prefilter_sorter {
-        tag = "go_test",
-        sorter = conf.generic_sorter({}),
-      },
-    },
+    find_files = { mappings = keymaps, sorter = tag_sorter },
     live_grep = { mappings = keymaps },
     lsp_type_definitions = { mappings = keymaps },
-    lsp_references = { mappings = keymaps,
-      sorter = conf.prefilter_sorter {
-        tag = "go_test",
-        sorter = conf.generic_sorter({}),
-      },
-    },
+    lsp_references = { mappings = keymaps, sorter = tag_sorter },
     diagnostics = { mappings = keymaps },
   },
   extensions = {
@@ -190,7 +183,6 @@ require('telescope').setup({
       override_generic_sorter = true,  -- override the generic sorter
       override_file_sorter = true,     -- override the file sorter
       case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                       -- the default case_mode is "smart_case"
     },
     file_browser = {
       prompt_title = vim.fn.getcwd(),

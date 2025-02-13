@@ -5,16 +5,16 @@ local make_entry = require "telescope.make_entry"
 local conf = require("telescope.config").values
 
 
-function go_test_tags(fn, key)
+function test_mock_tags(fn, key)
   return function(entry)
     local vals = fn(entry)
-    vals.go_test = "file"
+    vals.test_mock = "file"
     if string.match(vals[key], "_test%.go$") then
-      vals.go_test = "go_test"
+      vals.test_mock = "go_test"
     end
 
     if string.match(vals[key], "[_/-]mock[_/-]") then
-      vals.go_test = "go_mock"
+      vals.test_mock = "go_mock"
     end
 
     return vals
@@ -82,11 +82,11 @@ local def_impl = function(opts)
     prompt_title = "LSP Defs / Impls",
     finder = finders.new_table {
       results = store,
-      entry_maker = opts.entry_maker or go_test_tags(make_entry.gen_from_quickfix(opts), "filename"),
+      entry_maker = opts.entry_maker or test_mock_tags(make_entry.gen_from_quickfix(opts), "filename"),
     },
     previewer = conf.qflist_previewer(opts),
     sorter = conf.prefilter_sorter {
-      tag = "go_test",
+      tag = "test_mock",
       sorter = conf.generic_sorter({}),
     },
     attach_mappings = function(_, map)
