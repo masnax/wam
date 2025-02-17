@@ -17,6 +17,14 @@ function test_mock_tags(fn, key)
       vals.test_mock = "go_mock"
     end
 
+    if string.match(vals[key], "slog_gen.go$") then
+      vals.test_mock = "go_slog_gen"
+    end
+
+    if string.match(vals[key], "mapper.go$") then
+      vals.test_mock = "go_mapper"
+    end
+
     return vals
   end
 end

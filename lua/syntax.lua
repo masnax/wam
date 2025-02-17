@@ -22,8 +22,19 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
-
+local last_filter = 0
 local cmp = require'cmp'
+local entries = {}
+
+local entry_filter = function(entry, ctx)
+  if last_filter == 0 then
+    return true
+  end
+
+  --print(last_filter .. ":" .. cmp.lsp.CompletionItemKind[entries[last_filter]])
+  return entry:get_kind() == entries[last_filter]
+end
+
 cmp.setup({
   snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end},
   window = {
@@ -35,13 +46,31 @@ cmp.setup({
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.sync(function()
+      last_filter = 0
+      entries = {}
       if cmp.visible() then
         cmp.abort()
       else
         cmp.complete()
       end
     end),
-    ['<C-e>'] = cmp.mapping.abort(),
+    ['<C-l>'] = cmp.mapping(function()
+      if cmp.visible() then
+       if last_filter == 0 then
+          local map = {}
+          for _, e in ipairs(cmp.get_entries()) do
+            map[e:get_kind()] = e:get_kind()
+          end
+
+          for _, e in pairs(map) do
+            table.insert(entries, e)
+          end
+       end
+
+       last_filter = (last_filter + 1) % (#entries + 1)
+       cmp.complete()
+      end
+    end),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   }),
 
@@ -69,11 +98,11 @@ cmp.setup({
   --sources = cmp.config.sources({},{}),
   sources = cmp.config.sources(
     {
-      { name = 'nvim_lsp' },
-      { name = 'nvim_lsp_signature_help' },
-      { name = 'nvim_lsp_document_symbol' },
-      { name = 'path' },
-      { name = "fuzzy_buffer" },
+      { name = 'nvim_lsp', entry_filter = entry_filter },
+      { name = 'nvim_lsp_signature_help', entry_filter = entry_filter },
+      { name = 'nvim_lsp_document_symbol', entry_filter = entry_filter },
+      { name = 'path', entry_filter = entry_filter },
+      { name = "fuzzy_buffer", entry_filter = entry_filter },
     },
     {
       { name = "buffer" },

@@ -143,7 +143,13 @@ local keymaps = {
     ["<A-UP>"] = actions.preview_scrolling_up,
     ["<A-DOWN>"] = actions.preview_scrolling_down,
     ["<C-Space>"] = open_in_hover,
-    ["<C-L>"] = actions.complete_tag,
+    ["<C-L>"] = function(bufnr)
+      if vim.fn.pumvisible() == 1 then
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-n>", true, false, true), 'n', true)
+      else
+      actions.complete_tag(bufnr)
+      end
+    end,
     ["<C-/>"] = actions.which_key,
     ["<C-_>"] = actions.which_key, -- keys from pressing <C-/>
   },
@@ -199,6 +205,10 @@ require('telescope').setup({
           end,
         },
         n = {
+          ["n"] = function(bufnr)
+            fb_actions.create(bufnr)
+            vim.api.nvim_feedkeys("i", "n", false)
+          end,
           ["c"] = fb_actions.change_cwd,
           ["h"] = fb_actions.toggle_hidden,
           ["."] = fb_actions.toggle_hidden,
