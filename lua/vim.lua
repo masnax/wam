@@ -69,6 +69,19 @@ vim.cmd([[
   augroup END
 ]])
 
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "incus_editor_*.yaml",
+  callback = function()
+    vim.bo.filetype = "bash"
+
+    vim.api.nvim_set_hl(0, "@variable.parameter", {fg = "#9a7a9b", bg = "none", bold = false, italic = false, underline = false})
+    vim.api.nvim_set_hl(0, "@constant", {fg = "#9a8aeb", bg = "none", bold = true, italic = false, underline = false})
+    vim.api.nvim_set_hl(0, "@function.call", {fg = "#df6d6a", bg = "none", bold = true, italic = false, underline = false})
+    vim.api.nvim_set_hl(0, "@string.special.path", {fg = "#c04055", bg = "none", bold = true, italic = true, underline = false})
+
+  end,
+})
+
 vim.cmd([[
 set bg=dark
 set tabstop=2 shiftwidth=2 expandtab
