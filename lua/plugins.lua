@@ -41,7 +41,8 @@ return require('packer').startup(function(use)
   use { 'smjonas/inc-rename.nvim' }
 
   use { 'noib3/nvim-cokeline', requires = 'kyazdani42/nvim-web-devicons' }
-  use { 'freddiehaddad/feline.nvim' }
+  use { 'masnax/feline.nvim' }
+  use { 'sindrets/diffview.nvim' }
   use { 'folke/noice.nvim', requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" } }
   use { "jackMort/ChatGPT.nvim", requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } }
 

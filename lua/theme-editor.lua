@@ -66,7 +66,7 @@ local function update_highlight(opts_list)
     underline = truefalse[opts.underline] or nil
   }
 
-    vim.api.nvim_set_hl(0, opts.Group, hl_def)
+    vim.api.nvim_set_hl(0, opts["# Group"], hl_def)
   end
 end
 
@@ -77,36 +77,41 @@ local function open_popup()
     relative = "cursor",
     row = 1,
     col = 0,
-    width = 30,
-    height = 11,
+    width = 1,
+    height = 0,
     style = "minimal",
     border = "single",
   }
-
-  local win_id = api.nvim_open_win(bufnr, true, win_opts)
 
     local lines = {}
   for group, cfg in pairs(maps) do
     -- Fill buffer with default values
     local lines_gapped = {
-      "",
-      "   Group: " .. group,
-      (cfg.foreground and "   fg: " .. cfg.foreground),
-      (cfg.background and "   bg: " .. cfg.background),
-      (cfg.bold and "   bold: " .. cfg.bold),
-      (cfg.italic and "   italic: " .. cfg.italic),
-      (cfg.underline and "   underline: " .. cfg.underline),
+      "# Group: " .. group,
+      (cfg.foreground and "  fg: " .. cfg.foreground),
+      (cfg.background and "  bg: " .. cfg.background),
+      (cfg.bold and "  bold: " .. cfg.bold),
+      (cfg.italic and "  italic: " .. cfg.italic),
+      (cfg.underline and "  underline: " .. cfg.underline),
     }
 
     for _, v in pairs(lines_gapped) do
+      if win_opts.width < #v + 1 then
+        win_opts.width = #v + 1
+      end
+
+      win_opts.height = win_opts.height + 1
       table.insert(lines, v)
     end
   end
+
+  local win_id = api.nvim_open_win(bufnr, true, win_opts)
 
   api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
 
   -- Make buffer editable
   api.nvim_buf_set_option(bufnr, "modifiable", true)
+  api.nvim_buf_set_option(bufnr, "filetype", "markdown")
   api.nvim_buf_set_option(bufnr, 'completeopt', 'longest,noinsert')
   require'cmp'.setup.buffer({enabled = false})
 
@@ -116,10 +121,10 @@ local function open_popup()
     local index = 0
     local opts = {}
     for _, line in ipairs(new_lines) do
-      local types = {"Group", "fg", "bg", "bold", "italic", "underline"}
+      local types = {"# Group", "fg", "bg", "bold", "italic", "underline"}
       for _, t in ipairs(types) do
         if string.match(line, t .. ": (.+)") then
-          if t == "Group" then
+          if t == "# Group" then
             index = index + 1
             opts[index] = {}
           end
@@ -157,4 +162,5 @@ local function open_popup()
 
 end
 
+vim.keymap.set('n', "hh", open_popup, {noremap = true, silent = true})
 vim.api.nvim_create_user_command("HighlightPopup", open_popup, {})

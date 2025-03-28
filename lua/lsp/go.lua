@@ -1,5 +1,5 @@
 require('go').setup({
---  gofmt = 'gofmt',
+  gofmt = 'gofumpt',
   goimports = 'goimports',
 --  max_line_len = 10000,
 })

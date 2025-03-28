@@ -15,8 +15,8 @@ vim.opt.timeoutlen = 250
 
 function go_imports()
   vim.cmd([[
-      undojoin | :silent! lua require('go.format').gofmt()
-      undojoin | :silent! lua vim.defer_fn(function() require('go.format').goimports() end, 1)
+      undojoin | :silent! lua vim.defer_fn(function() require('go.format').gofmt() end, 10)
+      undojoin | :silent! lua vim.defer_fn(function() require('go.format').goimports() end, 10)
       "undojoin | :silent! lua clean_imports()
       ]])
 

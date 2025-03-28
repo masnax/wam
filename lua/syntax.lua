@@ -174,7 +174,17 @@ for _, lsp in pairs(servers) do
 end
 
 
-require'lsp_signature'.setup({toggle_key = "<C-_>", auto_close_after = 3})
+require'lsp_signature'.setup(
+  {
+    toggle_key = "<C-_>",
+    auto_close_after = 3,
+    floating_window = false,
+    hint_enable = false,
+    doc_lines = 1000,
+    floating_window_above_cur_line = true,
+    zindex = 2000,
+  })
+vim.api.nvim_set_hl(0, "LspSignatureActiveParameter", {bg = "#aaaaff", fg = "#000000"})
 require'lsp_lines'.setup()
 
 vim.diagnostic.config({

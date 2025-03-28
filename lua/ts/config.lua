@@ -173,6 +173,9 @@ require('telescope').setup({
       horizontal = { preview_width = 0.6 },
     },
     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
+    mappings = {
+      i = {["<C-l>"] = keymaps["i"]["<C-L>"]},
+    },
     --sorting_strategy = "ascending",
     -- layout_config = { horizontal = { prompt_position = "top", }, },
   },
