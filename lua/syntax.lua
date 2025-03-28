@@ -6,7 +6,7 @@ require'nvim-treesitter.configs'.setup {
   fold = {enable = true},
   textsubjects = {enable = true},
   rainbow = {
-    enable = true,
+--    enable = true,
     extended_mode = true,
     colors = {
       "#3f303a",
@@ -21,6 +21,15 @@ require'nvim-treesitter.configs'.setup {
     },
   }
 }
+
+vim.api.nvim_set_hl(0, 'RainbowDelimiterRed',    {fg = "#3f303a"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterYellow', {fg = "#5f405a"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterBlue',   {fg = "#6f606a"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterOrange', {fg = "#6f505a"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterGreen',  {fg = "#8f808a"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterViolet', {fg = "#8f707a"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterCyan',   {fg = "#bfa0aa"})
+require('rainbow-delimiters.setup').setup()
 
 local last_filter = 0
 local cmp = require'cmp'

@@ -34,7 +34,7 @@ return require('packer').startup(function(use)
   use { 'jghauser/fold-cycle.nvim' }
   use { 'windwp/nvim-autopairs' }
   use { 'SmiteshP/nvim-navic' }
-  use { 'mrjones2014/nvim-ts-rainbow' }
+  use { 'HiPhish/rainbow-delimiters.nvim' }
   use {'lewis6991/gitsigns.nvim'}
   use { 'lukas-reineke/indent-blankline.nvim' }
   use { 'danielfalk/smart-open.nvim', branch = "0.1.x", requires = {"kkharji/sqlite.lua"} }
