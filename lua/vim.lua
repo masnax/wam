@@ -95,6 +95,15 @@ set tabstop=2 shiftwidth=2 expandtab
 :cnoreabbrev Qa! qa!
 :cnoreabbrev Wa! wa!
 
+:command! Bd  bd
+:command! BD bd
+
+:command! Bn  bn
+:command! BN bn
+
+:command! Bp  bp
+:command! BP bp
+
 ":cnoreabbrev q :silent! call CloseOnLast() |:echo ''
 :cnoreabbrev wq w<bar>:sleep 100m<bar>:bd
 ":cnoremap q: q
@@ -115,8 +124,7 @@ map ' <Nop>
 :nnoremap ff :filetype detect<CR>
 :nnoremap CC :ColorizerToggle<CR>
 :nnoremap <Esc> :silent! noh <bar> Noice dismiss <CR>
-:nnoremap ;; :Telescope smart_open<cr>
-:nnoremap ;; :Telescope file_browser path=%:p:h<cr>
+":nnoremap ;; :Telescope smart_open<cr>
 :nnoremap U :Telescope undo<cr>
 :nnoremap q: <nop>
 :nnoremap q/ <nop>

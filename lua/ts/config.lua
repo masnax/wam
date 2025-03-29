@@ -32,6 +32,16 @@ nnoremap('\\\\', function()
   opts.entry_maker = test_mock_tags(make_entry.gen_from_file(opts), 1)
   ts.find_files(opts)
 end)
+
+nnoremap(';;', function()
+  local opts = { path='%:p:h', _entry_cache = {}, default_text = ":file:" }
+  opts.entry_maker = function(local_opts)
+    local fb_make_entry = require "telescope._extensions.file_browser.make_entry"
+    return test_mock_tags(fb_make_entry(vim.tbl_extend("force", opts, local_opts)), 1)
+  end
+  require'telescope'.extensions.file_browser.file_browser(opts)
+end)
+
 nnoremap("''", function() ts.lsp_document_symbols({wrap_results=true, fname_width=2000, symbol_width=50}) end)
 
 
@@ -195,6 +205,8 @@ require('telescope').setup({
     },
     file_browser = {
       prompt_title = vim.fn.getcwd(),
+      sorter = conf.file_sorter(),
+      sorter = conf.prefilter_sorter { tag = "test_mock", sorter = conf.file_sorter() },
       mappings = {
         i = {
           ["<C-Space>"] = open_in_hover,
