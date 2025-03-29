@@ -22,7 +22,6 @@ return require('packer').startup(function(use)
 
   use { 'ray-x/lsp_signature.nvim' }
   use { 'ray-x/go.nvim' }
-  use { "https://git.sr.ht/~whynothugo/lsp_lines.nvim" }
   use { 'norcalli/nvim-colorizer.lua'}
   use { 'folke/paint.nvim' }
   use { 'masnax/sunset-vim' }

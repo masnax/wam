@@ -194,11 +194,31 @@ require'lsp_signature'.setup(
     zindex = 2000,
   })
 vim.api.nvim_set_hl(0, "LspSignatureActiveParameter", {bg = "#aaaaff", fg = "#000000"})
-require'lsp_lines'.setup()
+vim.api.nvim_set_hl(0, "DiagnosticError", {fg = "#000000", bg = "#802040", bold = true})
 
 vim.diagnostic.config({
-  virtual_text = false,
-  virtual_lines = {only_current_line = true},
+  virtual_lines = {
+    current_line = true,
+    format = function(diag)
+      local split_lines = function(input, max_length)
+        local result, line = "", ""
+
+        for word in input:gmatch("%S+") do
+          if #line + #word + 1 > max_length then
+            result = result .. line .. "\n"
+            line = word
+          else
+            line = line == "" and word or line .. " " .. word
+          end
+        end
+
+        return result .. (line ~= "" and line or "")
+      end
+
+      return split_lines(diag.message, 80)
+    end,
+  },
+  virtual_text = { current_line = true },
   float = {border = "rounded"},
 })
 
