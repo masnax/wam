@@ -22,13 +22,13 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
-vim.api.nvim_set_hl(0, 'RainbowDelimiterRed',    {fg = "#3f303a"})
-vim.api.nvim_set_hl(0, 'RainbowDelimiterYellow', {fg = "#5f405a"})
-vim.api.nvim_set_hl(0, 'RainbowDelimiterBlue',   {fg = "#6f606a"})
-vim.api.nvim_set_hl(0, 'RainbowDelimiterOrange', {fg = "#6f505a"})
-vim.api.nvim_set_hl(0, 'RainbowDelimiterGreen',  {fg = "#8f808a"})
-vim.api.nvim_set_hl(0, 'RainbowDelimiterViolet', {fg = "#8f707a"})
-vim.api.nvim_set_hl(0, 'RainbowDelimiterCyan',   {fg = "#bfa0aa"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterRed',    {fg = "#30303f"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterYellow', {fg = "#50505f"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterBlue',   {fg = "#60606f"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterOrange', {fg = "#70707f"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterGreen',  {fg = "#80808f"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterViolet', {fg = "#90909f"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterCyan',   {fg = "#b0b0bf"})
 require('rainbow-delimiters.setup').setup()
 
 local last_filter = 0

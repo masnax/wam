@@ -14,13 +14,13 @@ vim.keymap.set('n', '<Space>g', function()
 end)
 
 nnoremap('<Space>', function()
-  local opts = {jump_type="never", wrap_results=true, show_line=false,  fname_width=2000}
+  local opts = {jump_type="never", wrap_results=true, show_line=false,  fname_width=2000, default_text=":file:"}
   opts.entry_maker = test_mock_tags(make_entry.gen_from_quickfix(opts), "filename")
   ts.def_impl(opts)
 end)
 
 nnoremap('<Space><Space>', function()
-  local opts = {jump_type="never", include_declaration=false, wrap_results=true, show_line=false,  fname_width=2000}
+  local opts = {jump_type="never", include_declaration=false, wrap_results=true, show_line=false,  fname_width=2000, default_text=":file:"}
   opts.entry_maker = test_mock_tags(make_entry.gen_from_quickfix(opts), "filename")
   ts.lsp_references(opts)
 end)
@@ -28,7 +28,7 @@ end)
 nnoremap('//', function() ts.live_grep({grep_open_files=true, wrap_results=true}) end)
 --nnoremap('\\', function() ts.live_grep({wrap_results=true}) end)
 nnoremap('\\\\', function()
-  local opts = {hidden=true}
+  local opts = {hidden=true, default_text = ":file:"}
   opts.entry_maker = test_mock_tags(make_entry.gen_from_file(opts), 1)
   ts.find_files(opts)
 end)
