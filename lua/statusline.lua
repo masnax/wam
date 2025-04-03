@@ -311,4 +311,5 @@ options.components.active[3] = options.right
 
 
 
+vim.api.nvim_set_hl(0, "StatusLine", {bg = "none"})
 require('feline').setup{ components = options.components }

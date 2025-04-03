@@ -1,7 +1,7 @@
 local get_hex = require('cokeline/hlgroups').get_hl_attr
 local mappings = require('cokeline/mappings')
 
-local errors_fg = get_hex('DiagnosticError', 'fg')
+local errors_fg = get_hex('DiagnosticError', 'bg')
 local warnings_fg = get_hex('DiagnosticWarn', 'fg')
 
 local red = vim.g.terminal_color_1
@@ -14,14 +14,14 @@ local components = {
       if not buffer.is_focused then
         return "none"
       end
-      return get_hex('Normal', 'bg')
+      return "none"
     end,
   },
 
   inner_space = { text = ' ', bg = function(buffer) if not buffer.is_focused then return palette.surface_light end return nil end},
   corner_begin = {
     text = '',
-    bg =  get_hex('Normal', 'bg'),
+    bg =  "none",
     fg = function(buffer)
       if not buffer.is_focused then
         return palette.surface_light
@@ -31,7 +31,7 @@ local components = {
   },
   corner_end = {
     text = '',
-    bg = get_hex('Normal', 'bg'),
+    bg =  "none",
     fg = function(buffer)
       if not buffer.is_focused then
         return palette.surface_light
