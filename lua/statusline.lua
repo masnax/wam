@@ -1,5 +1,6 @@
 
 require'palettes.fire'
+require'icons'
 
 local options = {
   lsp = require "feline.providers.lsp",
@@ -162,7 +163,7 @@ options.diagnostic = {
          return options.lsp.diagnostics_exist(options.lsp_severity.ERROR)
       end,
 
-      icon = "  ",
+      icon = " "..diagnostic.Error.icon.." ",
 
       hl = {bg = palette.highlight_low },
    },
@@ -172,7 +173,7 @@ options.diagnostic = {
       enabled = function()
          return options.lsp.diagnostics_exist(options.lsp_severity.WARN)
       end,
-      icon = "  ",
+      icon = " "..diagnostic.Warn.icon.." ",
       hl = {bg = palette.highlight_low },
    },
 
@@ -181,7 +182,7 @@ options.diagnostic = {
       enabled = function()
          return options.lsp.diagnostics_exist(options.lsp_severity.HINT)
       end,
-      icon = "  ",
+      icon = " "..diagnostic.Hint.icon.." ",
       hl = {bg = palette.highlight_low },
    },
 
@@ -190,7 +191,7 @@ options.diagnostic = {
       enabled = function()
          return options.lsp.diagnostics_exist(options.lsp_severity.INFO)
       end,
-      icon = "  ",
+      icon = " "..diagnostic.Info.icon.." ",
       hl = {bg = palette.highlight_low },
    },
 }

@@ -193,8 +193,17 @@ require'lsp_signature'.setup(
     floating_window_above_cur_line = true,
     zindex = 2000,
   })
+
 vim.api.nvim_set_hl(0, "LspSignatureActiveParameter", {bg = "#aaaaff", fg = "#000000"})
-vim.api.nvim_set_hl(0, "DiagnosticError", {fg = "#000000", bg = "#802040", bold = true})
+
+for txt, info in pairs(require'icons'.diagnostic) do
+  local line = "Diagnostic"..txt
+  local sign = "DiagnosticSign"..txt
+
+  vim.api.nvim_set_hl(0, line, {fg = "#000000", bg = info.color, bold = true})
+  vim.api.nvim_set_hl(0, sign, {fg = info.color, bg = none})
+  vim.fn.sign_define(sign, { text = info.icon, texthl = sign, numhl = "" })
+end
 
 vim.diagnostic.config({
   virtual_lines = {

@@ -209,6 +209,7 @@ require('telescope').setup({
       sorter = conf.prefilter_sorter { tag = "test_mock", sorter = conf.file_sorter() },
       mappings = {
         i = {
+          ["<TAB>"] = actions.toggle_selection,
           ["<C-Space>"] = open_in_hover,
           ["<CR>"] = function(prompt_bufnr, dir)
             local entry = action_state.get_selected_entry()
