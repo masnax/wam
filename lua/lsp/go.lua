@@ -1,7 +1,7 @@
 require('go').setup({
   gofmt = 'gofumpt',
   goimports = 'goimports',
-  diagnostic = {virtual_text = false},
+  diagnostic = false,
 
 --  max_line_len = 10000,
 })
