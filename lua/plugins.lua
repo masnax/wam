@@ -1,66 +1,60 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
+return {
+  { 'neovim/nvim-lspconfig', lazy = false },
+  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  { 'nvim-treesitter/nvim-treesitter-textobjects' },
+  { 'nvim-treesitter/nvim-treesitter-refactor' },
+  { 'nvim-treesitter/playground' },
 
-return require('packer').startup(function(use)
-  -- Packer can manage itself
-  use { 'wbthomason/packer.nvim'}
-
-  use { 'neovim/nvim-lspconfig' } -- Collection of configurations for the built-in LSP client
-
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use { 'nvim-treesitter/nvim-treesitter-textobjects' }
-  use { 'nvim-treesitter/nvim-treesitter-refactor' }
-  use { 'nvim-treesitter/playground' }
-
-  use {'nvim-telescope/telescope.nvim', requires = {
+  {'nvim-telescope/telescope.nvim', dependencies = {
     {'nvim-lua/plenary.nvim'},
-    {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
-  }}
-  use {'nvim-telescope/telescope-file-browser.nvim'}
+    {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
+  }},
 
-  use {'debugloop/telescope-undo.nvim'}
-  use { 'RRethy/nvim-treesitter-textsubjects' }
+  {'nvim-telescope/telescope-file-browser.nvim'},
 
-  use { 'ray-x/lsp_signature.nvim' }
-  use { 'ray-x/go.nvim' }
-  use { 'norcalli/nvim-colorizer.lua'}
-  use { 'folke/paint.nvim' }
-  use { 'masnax/sunset-vim' }
-  use { 'kyazdani42/nvim-web-devicons' }
-  use { 'lambdalisue/glyph-palette.vim' }
-  use { 'rose-pine/neovim', as = 'rose-pine' }
-  use { "catppuccin/nvim", as = "catppuccin" }
-  use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
-  use { 'jghauser/fold-cycle.nvim' }
-  use { 'windwp/nvim-autopairs' }
-  use { 'SmiteshP/nvim-navic' }
-  use { 'HiPhish/rainbow-delimiters.nvim' }
-  use {'lewis6991/gitsigns.nvim'}
-  use { 'lukas-reineke/indent-blankline.nvim' }
-  use { 'danielfalk/smart-open.nvim', branch = "0.1.x", requires = {"kkharji/sqlite.lua"} }
-  use { 'smjonas/inc-rename.nvim' }
+  {'debugloop/telescope-undo.nvim'},
+  { 'RRethy/nvim-treesitter-textsubjects' },
 
-  use { 'noib3/nvim-cokeline', requires = 'kyazdani42/nvim-web-devicons' }
-  use { 'masnax/feline.nvim' }
-  use { 'sindrets/diffview.nvim' }
-  use { 'folke/noice.nvim', requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" } }
-  use { "jackMort/ChatGPT.nvim", requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } }
+  { 'ray-x/lsp_signature.nvim' },
+  { 'ray-x/go.nvim' },
+  { 'norcalli/nvim-colorizer.lua'},
+  { 'folke/paint.nvim' },
+  { 'masnax/sunset-vim' },
+  { 'kyazdani42/nvim-web-devicons' },
+  { 'lambdalisue/glyph-palette.vim' },
+  { 'rose-pine/neovim', name = 'rose-pine' },
+  { "catppuccin/nvim", name = "catppuccin" },
+  { 'kevinhwang91/nvim-ufo', dependencies = { 'kevinhwang91/promise-async' }},
+  { 'jghauser/fold-cycle.nvim' },
+  { 'windwp/nvim-autopairs' },
+  { 'SmiteshP/nvim-navic' },
+  { 'HiPhish/rainbow-delimiters.nvim' },
+  { 'lewis6991/gitsigns.nvim' },
+  { 'lukas-reineke/indent-blankline.nvim' },
+  { 'smjonas/inc-rename.nvim' },
 
-  use { 'CosmicNvim/cosmic-ui',
-    requires = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
+  { 'noib3/nvim-cokeline', dependencies = { 'kyazdani42/nvim-web-devicons' }},
+  { 'masnax/feline.nvim' },
+  { 'sindrets/diffview.nvim' },
+  { 'folke/noice.nvim', dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" } },
+  { "jackMort/ChatGPT.nvim", dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } },
+
+  { 'CosmicNvim/cosmic-ui',
+    dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
     config = function() require('cosmic-ui').setup() end
-  }
+  },
 
-  use { 'phaazon/hop.nvim',
+  { 'phaazon/hop.nvim',
     config = function()
       vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
       vim.api.nvim_set_keymap('v', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
       vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
       vim.api.nvim_set_keymap('v', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-      require'hop'.setup({keys = "asdfghjklqwertyuiopzxcvbnm"})
+      require'hop'.setup({keys = "123456789abcdefghijklmnopqrstuvwxyz"})
     end
-  }
+  },
 
-  use { 'hrsh7th/nvim-cmp', requires = {
+  { 'hrsh7th/nvim-cmp', dependencies = {
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'onsails/lspkind-nvim',
@@ -69,5 +63,5 @@ return require('packer').startup(function(use)
     'hrsh7th/cmp-cmdline',
     'L3MON4D3/LuaSnip',
     'saadparwaiz1/cmp_luasnip',
-  }}
-end)
+  }},
+}
