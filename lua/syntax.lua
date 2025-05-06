@@ -22,13 +22,13 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
-vim.api.nvim_set_hl(0, 'RainbowDelimiterRed',    {fg = "#30303f"})
-vim.api.nvim_set_hl(0, 'RainbowDelimiterYellow', {fg = "#50505f"})
-vim.api.nvim_set_hl(0, 'RainbowDelimiterBlue',   {fg = "#60606f"})
-vim.api.nvim_set_hl(0, 'RainbowDelimiterOrange', {fg = "#70707f"})
-vim.api.nvim_set_hl(0, 'RainbowDelimiterGreen',  {fg = "#80808f"})
-vim.api.nvim_set_hl(0, 'RainbowDelimiterViolet', {fg = "#90909f"})
-vim.api.nvim_set_hl(0, 'RainbowDelimiterCyan',   {fg = "#b0b0bf"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterRed', {fg = "#50505f"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterYellow',   {fg = "#60606f"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterBlue', {fg = "#70707f"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterOrange',  {fg = "#80808f"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterGreen', {fg = "#90909f"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterViolet',   {fg = "#b0b0bf"})
+vim.api.nvim_set_hl(0, 'RainbowDelimiterCyan',    {fg = "#d0d0df"})
 require('rainbow-delimiters.setup').setup()
 
 local last_filter = 0
@@ -130,8 +130,7 @@ cmp.setup.cmdline(':', {
 })
 
 -- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
---local capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true
