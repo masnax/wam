@@ -44,6 +44,8 @@ return {
     config = function() require('cosmic-ui').setup() end
   },
 
+  { "sphamba/smear-cursor.nvim", opts = { cursor_color = "#d3cdc3"} },
+
   { 'phaazon/hop.nvim',
     config = function()
       vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})

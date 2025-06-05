@@ -112,7 +112,7 @@ options.file_name = {
          icon = " "
          return icon
       end
-      if next(vim.lsp.buf_get_clients()) ~= nil then
+      if next(vim.lsp.get_clients()) ~= nil then
       return " " .. icon .. " " .. filename .. "  "
       else
       return " " .. icon .. " " .. filename .. " "
