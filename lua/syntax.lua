@@ -138,7 +138,7 @@ capabilities.textDocument.foldingRange = {
 
 local servers = {'gopls', "bashls" }
 for _, lsp in pairs(servers) do
-  require'lspconfig'[lsp].setup({
+  vim.lsp.config(lsp, {
     capabilities = capabilities,
     on_attach = function(client, bufnr)
       local lsp_opts = { noremap=true, silent=true }
@@ -179,6 +179,8 @@ for _, lsp in pairs(servers) do
       }
     }
   })
+
+  vim.lsp.enable(lsp)
 end
 
 
@@ -284,7 +286,7 @@ function ibl_sed()
     ]], old_scope_hl.fg))
 end
 
-vim.api.nvim_set_keymap('n', 'S', '<cmd>lua ibl_sed()<CR>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', 'S', '<cmd>lua ibl_sed()<CR>', { noremap = true, silent = true })
 
 require'paint'.setup {
   highlights = {

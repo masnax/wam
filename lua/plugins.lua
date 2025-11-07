@@ -44,7 +44,7 @@ return {
     config = function() require('cosmic-ui').setup() end
   },
 
-  { "sphamba/smear-cursor.nvim", opts = { cursor_color = "#d3cdc3"} },
+  --{ "sphamba/smear-cursor.nvim", opts = { cursor_color = "#d3cdc3"} },
 
   { 'phaazon/hop.nvim',
     config = function()

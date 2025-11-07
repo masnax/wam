@@ -127,6 +127,9 @@ local components = {
 }
 
 require('cokeline').setup({
+  buffers = {
+    new_buffers_position = 'number',
+  },
   mappings = {
     cycle_prev_next = true
   },
