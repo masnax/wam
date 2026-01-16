@@ -100,9 +100,7 @@ _G.get_color = function(g, t)
 end
 
 _G.get_hl = function()
-  local M = require("nvim-treesitter-playground.hl-info")
   local highlighter = require "vim.treesitter.highlighter"
-  local utils = require "nvim-treesitter-playground.utils"
   local buf = vim.api.nvim_get_current_buf()
   local result = {}
 
@@ -119,49 +117,45 @@ _G.get_hl = function()
   end
 
   if highlighter.active[buf] then
-
     local get_matches = function()
-      local bufnr = vim.api.nvim_get_current_buf()
-      local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-      row = row - 1
-
-      local results = utils.get_hl_groups_at_position(bufnr, row, col)
-      local highlights = {}
-      for _, hl in pairs(results) do
-        local color = vim.api.nvim_get_hl_by_name("@"..hl.capture, {})
-        local hl_info = ""
-        for field, value in pairs(color) do
-          if value ~= nil then
+      local all_highlights = {}
+      local pos_info = vim.inspect_pos()
+      for key, hls in pairs({["Syntax"] = pos_info.syntax, ["Treesitter"] = pos_info.treesitter }) do
+        highlights = {}
+        for _, hl in pairs(hls) do
+          local color = vim.api.nvim_get_hl_by_name("@"..hl.capture, {})
+          local hl_info = ""
+          for field, value in pairs(color) do
+            if value ~= nil then
 
 
-             if field == "foreground" or field == "background" then
-              value = string.format("#%06x", value)
-             end
+              if field == "foreground" or field == "background" then
+                value = string.format("#%06x", value)
+              end
 
-            hl_info = hl_info .. "\n" .. "  - " .. tostring(field) .. ": " .. tostring(value)
+              hl_info = hl_info .. "\n" .. "  - " .. tostring(field) .. ": " .. tostring(value)
+            end
           end
-        end
 
-        local line = "* **@" .. hl.capture .. "**"
-        if hl.priority then
-          line = line .. "(" .. hl.priority .. ")"
-        end
+          local line = "* **@" .. hl.capture .. "**"
+          if hl.priority then
+            line = line .. "(" .. hl.priority .. ")"
+          end
 
-        if hl_info ~= "" then
-          line = line .. ": " .. hl_info
+          if hl_info ~= "" then
+            line = line .. ": " .. hl_info
+          end
+          table.insert(highlights, line)
         end
-        table.insert(highlights, line)
+        all_highlights[key] = highlights
       end
-      return highlights
+
+      return all_highlights
     end
 
-    local matches = get_matches()
-    add_to_result(matches, "Treesitter")
-  end
-
-  if vim.b.current_syntax ~= nil or #result == 0 then
-    local matches = M.get_syntax_hl()
-    add_to_result(matches, "Syntax")
+    for key, matches in pairs(get_matches()) do
+      add_to_result(matches, key)
+    end
   end
 
   if #result == 0 then

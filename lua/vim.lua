@@ -84,7 +84,7 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
 
 vim.cmd([[
 set bg=dark
-set tabstop=2 shiftwidth=2 expandtab
+set softtabstop=2 tabstop=2 shiftwidth=2 expandtab
 
 :command! WQ w<bar>:sleep 100m<bar>:bd
 :command! Wq w<bar>:sleep 100m<bar>:bd

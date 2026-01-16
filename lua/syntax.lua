@@ -1,26 +1,20 @@
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "go", "lua", "bash", "vim", "regex", "markdown", "markdown_inline", "git_config" },
-  sync_install = false,
-  highlight = {enable = true},
-  indent = {enable = true},
-  fold = {enable = true},
-  textsubjects = {enable = true},
-  rainbow = {
---    enable = true,
-    extended_mode = true,
-    colors = {
-      "#3f303a",
-      "#5f405a",
-      "#5f404a",
-      "#6f606a",
-      "#6f505a",
-      "#8f808a",
-      "#8f707a",
-      "#bfa0aa",
-      "#bf909a",
-    },
-  }
-}
+local lang_ts = { "go", "lua", "bash", "vim", "regex", "markdown", "markdown_inline", "git_config", "comment" },
+local ts = require'nvim-treesitter'
+ts.install(lang_ts)
+
+-- highlights:
+vim.api.nvim_create_autocmd('FileType', { pattern = lang_ts, callback = function() vim.treesitter.start() end })
+
+-- indents:
+vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
+-- folds:
+vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.wo[0][0].foldmethod = 'expr'
+
+-- textsubjects:
+-- not yet supported
+
 
 vim.api.nvim_set_hl(0, 'RainbowDelimiterRed', {fg = "#50505f"})
 vim.api.nvim_set_hl(0, 'RainbowDelimiterYellow',   {fg = "#60606f"})

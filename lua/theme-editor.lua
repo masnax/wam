@@ -2,9 +2,7 @@ local api = vim.api
 local ts = vim.treesitter
 
 local function get_hl_group_and_colors()
-  local M = require("nvim-treesitter-playground.hl-info")
   local highlighter = require "vim.treesitter.highlighter"
-  local utils = require "nvim-treesitter-playground.utils"
   local buf = vim.api.nvim_get_current_buf()
   local result = {}
 
@@ -13,13 +11,8 @@ local function get_hl_group_and_colors()
   if highlighter.active[buf] then
 
     local get_matches = function()
-      local bufnr = vim.api.nvim_get_current_buf()
-      local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-      row = row - 1
-
-      local results = utils.get_hl_groups_at_position(bufnr, row, col)
       local map_groups = {}
-      for _, hl in pairs(results) do
+      for _, hl in pairs(vim.inspect_pos().treesitter) do
         local map_entry = {}
         local color = vim.api.nvim_get_hl_by_name("@"..hl.capture, {})
         local hl_info = ""

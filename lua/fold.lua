@@ -4,7 +4,7 @@ require('fold-cycle').setup()
 
 vim.cmd([[
 set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+set foldexpr=v:lua.vim.treesitter.foldexpr()
 set foldtext=substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend))
 set foldnestmax=20
 set foldminlines=1

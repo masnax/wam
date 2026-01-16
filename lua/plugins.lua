@@ -1,9 +1,8 @@
 return {
   { 'neovim/nvim-lspconfig', lazy = false },
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-  { 'nvim-treesitter/nvim-treesitter-textobjects' },
-  { 'nvim-treesitter/nvim-treesitter-refactor' },
-  { 'nvim-treesitter/playground' },
+  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate', branch = "main" },
+  { 'nvim-treesitter/nvim-treesitter-textobjects', branch = "main" },
+  { 'nvim-treesitter/nvim-treesitter-locals', branch = "main" },
 
   {'nvim-telescope/telescope.nvim', dependencies = {
     {'nvim-lua/plenary.nvim'},
@@ -13,7 +12,6 @@ return {
   {'nvim-telescope/telescope-file-browser.nvim'},
 
   {'debugloop/telescope-undo.nvim'},
-  { 'RRethy/nvim-treesitter-textsubjects' },
 
   { 'ray-x/lsp_signature.nvim' },
   { 'ray-x/go.nvim' },
