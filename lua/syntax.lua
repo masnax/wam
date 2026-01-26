@@ -1,4 +1,4 @@
-local lang_ts = { "go", "lua", "bash", "vim", "regex", "markdown", "markdown_inline", "git_config", "comment" },
+local lang_ts = { "go", "lua", "bash", "vim", "regex", "markdown", "markdown_inline", "git_config", "comment" }
 local ts = require'nvim-treesitter'
 ts.install(lang_ts)
 
