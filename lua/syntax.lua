@@ -26,101 +26,89 @@ vim.api.nvim_set_hl(0, 'RainbowDelimiterCyan',    {fg = "#d0d0df"})
 require('rainbow-delimiters.setup').setup()
 
 local last_filter = 0
-local cmp = require'cmp'
 local entries = {}
 
-local entry_filter = function(entry, ctx)
-  if last_filter == 0 then
-    return true
-  end
+local lsp_types = require('blink.cmp.types').CompletionItemKind
+local src_filter = 0
+local lsp_srcs = {}
 
-  --print(last_filter .. ":" .. cmp.lsp.CompletionItemKind[entries[last_filter]])
-  return entry:get_kind() == entries[last_filter]
-end
-
-cmp.setup({
-  snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end},
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
-
-  mapping = cmp.mapping.preset.insert({
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.sync(function()
-      last_filter = 0
-      entries = {}
-      if cmp.visible() then
-        cmp.abort()
-      else
-        cmp.complete()
-      end
-    end),
-    ['<C-l>'] = cmp.mapping(function()
-      if cmp.visible() then
-       if last_filter == 0 then
-          local map = {}
-          for _, e in ipairs(cmp.get_entries()) do
-            map[e:get_kind()] = e:get_kind()
-          end
-
-          for _, e in pairs(map) do
-            table.insert(entries, e)
-          end
-       end
-
-       last_filter = (last_filter + 1) % (#entries + 1)
-       cmp.complete()
-      end
-    end),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-  }),
-
-  formatting = {
-    format = require'lspkind'.cmp_format({
-      mode = "symbol_text",
-      menu = ({
-        buffer = '[Buffer]',
-        nvim_lsp = '[LSP]',
-        luasnip = '[Snip]',
-        path = '[Path]',
-        nvim_lsp_signature_help = '[Sig]',
-      }),
-    }),
-  },
-
-  matching = {
-    disallow_partial_fuzzy_matching = true,
-  },
-
+local cmp_providers = { 'lsp', 'path', 'snippets', 'buffer' }
+require('blink.cmp').setup({
   completion = {
-    keyword_length = 1,
-  },
-
-  --sources = cmp.config.sources({},{}),
-  sources = cmp.config.sources(
-    {
-      { name = 'nvim_lsp', entry_filter = entry_filter },
-      { name = 'nvim_lsp_signature_help', entry_filter = entry_filter },
-      { name = 'nvim_lsp_document_symbol', entry_filter = entry_filter },
-      { name = 'path', entry_filter = entry_filter },
-      { name = "fuzzy_buffer", entry_filter = entry_filter },
+    list = { selection = { preselect = true, auto_insert = false } },
+    menu = {
+      draw = {
+        columns = {
+          { "label", "label_description", gap = 1 },
+          { "kind_icon", "kind", gap = 1 },
+        },
+      },
     },
-    {
-      { name = "buffer" },
+    documentation = { auto_show = true, auto_show_delay_ms = 500 },
+    ghost_text = { enabled = true },
+  },
+  keymap = {
+    preset = 'default',
+    ['<C-e>'] = false,
+    ['<C-space>'] = {
+      function(cmp)
+        lsp_srcs = {}
+        src_filter = 0
+        if cmp.is_visible() then cmp.hide() else cmp.show() end
+      end
+    },
+    ["<CR>"] = { "select_and_accept", "fallback" },
+    ['<C-l>'] = {
+      function(cmp)
+        if not cmp.is_visible() then return end
+
+        local cmp_items = cmp.get_items()
+        if #lsp_srcs == 0 then
+          local seen = {}
+          local kinds = {}
+          for i, item in ipairs(cmp_items) do
+            if not seen[item.kind] and item.source_id == "lsp" then
+              seen[item.kind] = true
+              table.insert(kinds, item.kind)
+            end
+          end
+
+          lsp_srcs = kinds
+        end
+
+        src_filter = (src_filter + 1) % (#lsp_srcs + 1)
+        if src_filter == 0 then
+          print("Filter cleared")
+          cmp.cancel({callback = cmp.show})
+        else
+          print("Filter", src_filter .. "/" .. #lsp_srcs .. ": " .. lsp_types[lsp_srcs[src_filter]])
+          cmp.cancel({callback = function() cmp.show({providers = {"lsp"}}) end })
+        end
+
+        return true
+      end
+    },
+  },
+  sources = {
+    default = cmp_providers,
+    providers = {
+      lsp = {
+        transform_items = function(cmp, items)
+          local subset = vim.tbl_filter(function(item)
+            return src_filter > 0 and item.kind == lsp_srcs[src_filter]
+          end, items)
+
+          if #subset == 0 then
+            return items
+          end
+
+          return subset
+        end
+      },
     }
-  )
-})
-
-cmp.setup.cmdline({'/','?'}, {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {{ name = 'buffer' }}
-})
-
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}})
+  },
+  --snippets = { preset = 'default' | 'luasnip' | 'mini_snippets' | 'vsnip' },
+  signature = { enabled = true },
 })
 
 -- Setup lspconfig.
@@ -297,13 +285,32 @@ require'paint'.setup {
   },
 }
 
-require('nvim-autopairs').setup({
-  check_ts = true,
-  ts_config = { bash = false, shell = false, sh = false },
+require('blink.pairs').setup({
+  highlights = { enabled = false, cmdline = false, },
+  mappings = {
+    enabled = true,
+    cmdline = true,
+    disabled_filetypes = {},
+    pairs = {
+      ["'"] = {
+        {
+          "'",
+          enter = false,
+          space = false,
+          when = function(ctx)
+            return ctx.ft ~= 'plaintext'
+            and ctx.ft ~= 'scheme'
+            and (
+              not ctx.char_under_cursor:match("'")
+              or (ctx:text_before_cursor(2) == "''")
+              or ctx:is_after_cursor("'")
+            )
+            and ctx.ts:blacklist('singlequote').matches
+          end,
+        },
+      },
+    },
+  },
 })
-cmp.event:on(
-  'confirm_done',
-  require'nvim-autopairs.completion.cmp'.on_confirm_done()
-)
 
 require("inc_rename").setup()

@@ -24,7 +24,7 @@ return {
   { "catppuccin/nvim", name = "catppuccin" },
   { 'kevinhwang91/nvim-ufo', dependencies = { 'kevinhwang91/promise-async' }},
   { 'jghauser/fold-cycle.nvim' },
-  { 'windwp/nvim-autopairs' },
+  { 'saghen/blink.pairs', version = '*', dependencies = 'saghen/blink.download' },
   { 'SmiteshP/nvim-navic' },
   { 'HiPhish/rainbow-delimiters.nvim' },
   { 'lewis6991/gitsigns.nvim' },
@@ -54,14 +54,9 @@ return {
     end
   },
 
-  { 'hrsh7th/nvim-cmp', dependencies = {
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-nvim-lsp-signature-help',
-    'onsails/lspkind-nvim',
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-path',
-    'hrsh7th/cmp-cmdline',
-    'L3MON4D3/LuaSnip',
-    'saadparwaiz1/cmp_luasnip',
-  }},
+  {
+    'saghen/blink.cmp',
+    dependencies = { 'rafamadriz/friendly-snippets' },
+    version = '1.*',
+  },
 }
