@@ -11,8 +11,6 @@ return {
 
   {'nvim-telescope/telescope-file-browser.nvim'},
 
-  {'debugloop/telescope-undo.nvim'},
-
   { 'ray-x/lsp_signature.nvim' },
   { 'ray-x/go.nvim' },
   { 'ray-x/guihua.lua' },
@@ -36,7 +34,6 @@ return {
   { 'masnax/feline.nvim' },
   { 'sindrets/diffview.nvim' },
   { 'folke/noice.nvim', dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" } },
-  { "jackMort/ChatGPT.nvim", dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } },
 
   { 'CosmicNvim/cosmic-ui',
     dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },

@@ -12,6 +12,9 @@ vim.opt.undodir = vim.env.HOME.."/.cache/nvim/undo"
 vim.opt.undofile = true
 vim.opt.cursorline = true
 vim.opt.timeoutlen = 250
+vim.opt.numberwidth = 1
+
+vim.cmd("packadd nvim.undotree")
 
 function go_imports()
   vim.cmd([[
@@ -124,8 +127,7 @@ map ' <Nop>
 :nnoremap ff :filetype detect<CR>
 :nnoremap CC :ColorizerToggle<CR>
 :nnoremap <Esc> :silent! noh <bar> Noice dismiss <CR>
-":nnoremap ;; :Telescope smart_open<cr>
-:nnoremap U :Telescope undo<cr>
+:nnoremap U :lua require'undotree'.open() <CR>
 :nnoremap q: <nop>
 :nnoremap q/ <nop>
 :nnoremap qq <nop>
