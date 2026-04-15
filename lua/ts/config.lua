@@ -34,7 +34,7 @@ nnoremap('\\\\', function()
 end)
 
 nnoremap(';;', function()
-  local opts = { path='%:p:h', _entry_cache = {}, default_text = ":file:" }
+  local opts = { path='%:p:h', _entry_cache = {}, default_text = ":file:", hidden = {file_browser = true, folder_browser = true}, follow_symlinks = true }
   opts.entry_maker = function(local_opts)
     local fb_make_entry = require "telescope._extensions.file_browser.make_entry"
     return test_mock_tags(fb_make_entry(vim.tbl_extend("force", opts, local_opts)), 1)
@@ -172,12 +172,15 @@ local conf = require("telescope.config").values
 local fzf_sorter = require("telescope").extensions.fzf.native_fzf_sorter
 -- lcocal default_sorter = conf.generic_sorter({})
 local tag_sorter = conf.prefilter_sorter { tag = "test_mock", sorter = fzf_sorter({fuzzy = true, case_mode = "smart_case"}) }
+
+local browser = require('ts.browser')
+
 require('telescope').setup({
   defaults = {
     layout_strategy = 'flex',
     layout_config = {
-      width = 0.99,
-      height = 0.99,
+      width = 0.95,
+      height = 0.95,
       flex = {flip_columns = 100, },
       vertical = { preview_height = 0.8 },
       horizontal = { preview_width = 0.6 },
@@ -210,7 +213,11 @@ require('telescope').setup({
       mappings = {
         i = {
           ["<TAB>"] = actions.toggle_selection,
-          ["<C-Space>"] = open_in_hover,
+          ["<S-TAB>"] = browser.goto_path,
+          --["<C-Space>"] = open_in_hover,
+          ["<C-Space>"] = browser.goto_path,
+          ["<C-n>"] = browser.create,
+          ["<C-c>"] = browser.set_cwd,
           ["<CR>"] = function(prompt_bufnr, dir)
             local entry = action_state.get_selected_entry()
             if entry and entry.Path:is_dir() then
@@ -221,36 +228,23 @@ require('telescope').setup({
           end,
         },
         n = {
-          ["n"] = function(bufnr)
-            fb_actions.create(bufnr)
-            vim.api.nvim_feedkeys("i", "n", false)
-          end,
-          ["c"] = fb_actions.change_cwd,
-          ["h"] = fb_actions.toggle_hidden,
+          ["n"] = browser.create,
+          ["+"] = browser.create,
           ["."] = fb_actions.toggle_hidden,
-          ["<Space>"] = fb_actions.change_cwd,
-          ["<CR>"] = function(prompt_bufnr)
-            local current_picker = action_state.get_current_picker(prompt_bufnr)
-            local finder = current_picker.finder
-            local os_sep = require'plenary.path'.path.sep
-            local fb_utils = require "telescope._extensions.file_browser.utils"
-            local input = current_picker:_get_prompt()
-            finder.cwd = input
-            finder.path = input
-
-            fb_utils.redraw_border_title(current_picker)
-            current_picker:refresh(finder, { reset_prompt = true, multi = current_picker._multi })
-            fb_utils.notify(
-              "action.change_cwd",
-              { msg = input, level = "INFO", quiet = finder.quiet }
-            )
-          end,
+          --["f"] = fb_actions.follow_symlinks,
+          ["<CR>"] = browser.set_cwd,
+          ["<TAB>"] = browser.goto_path,
+          -- disable
+          ["t"] = false,
+          ["c"] = false,
+          ["y"] = false,
+          ["h"] = false,
+          ["<2-LeftMouse>"] = false
         }
       }
     },
   }
 })
 require("telescope").load_extension("file_browser")
-require("telescope").load_extension("undo")
 require('telescope').load_extension('fzf')
 return keymaps
