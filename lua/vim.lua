@@ -15,8 +15,8 @@ vim.opt.timeoutlen = 250
 
 function go_imports()
   vim.cmd([[
-      undojoin | :silent! lua vim.defer_fn(function() require('go.format').gofmt() end, 10)
-      undojoin | :silent! lua vim.defer_fn(function() require('go.format').goimports() end, 10)
+      silent! undojoin | :silent! lua vim.defer_fn(function() require('go.format').gofmt() end, 10)
+      silent! undojoin | :silent! lua vim.defer_fn(function() require('go.format').goimports() end, 10)
       "undojoin | :silent! lua clean_imports()
       ]])
 
@@ -160,3 +160,19 @@ function! Start_New_Tab(path)
 endfunction
 :command! -nargs=1 TT :call Start_New_Tab(<f-args>)
 ]])
+
+vim.api.nvim_create_user_command("F", function(opts)
+  local dir = vim.fn.expand("%:p:h")   -- current buffer directory
+  local file = opts.args
+  if file == "" then
+    vim.cmd.edit()                     -- no args → normal :e
+  else
+    print(vim.fn.fnameescape(dir .. "/" .. file))
+    vim.cmd.edit(vim.fn.fnameescape(dir .. "/" .. file))
+  end
+end, {
+  nargs = "*",
+  complete = "file",
+})
+
+vim.cmd([[cnoreabbrev f F]])

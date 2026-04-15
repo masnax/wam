@@ -7,6 +7,20 @@ require'notify'.setup {
   stages = "static",
 }
 
+-- This is a wrapper to get the cwd to update from the initial value.
+vim.api.nvim_create_autocmd("CmdlineEnter", {
+  callback = function()
+    local formats = require'noice.config'.options.routes
+    for i, item in ipairs(formats) do
+      if item.filter.kind == "cwd_edit" then
+        item.opts.border.text.top = vim.fn.expand('%:p:h')
+        formats[i] = item
+        break
+      end
+    end
+  end,
+})
+
 require'noice'.setup {
   cmdline = {
     opts = {
@@ -14,7 +28,8 @@ require'noice'.setup {
       size = { width = "50%", height = "auto", },
     },
     format = {
-      edit = { pattern = "^:%s*ed?i?t?%s+", title = vim.fn.getcwd(), icon = "+" }
+      edit = { pattern = "^:%s*ed?i?t?%s+", title = vim.fn.getcwd(), icon = "+" },
+      cwd_edit = { pattern = "^:%s*F%s+", title = vim.fn.expand("%:p:h"), icon = "+" }
     }
   },
 
