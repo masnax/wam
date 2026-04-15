@@ -15,6 +15,7 @@ return {
 
   { 'ray-x/lsp_signature.nvim' },
   { 'ray-x/go.nvim' },
+  { 'ray-x/guihua.lua' },
   { 'norcalli/nvim-colorizer.lua'},
   { 'folke/paint.nvim' },
   { 'masnax/sunset-vim' },
@@ -54,9 +55,17 @@ return {
     end
   },
 
-  {
-    'saghen/blink.cmp',
-    dependencies = { 'rafamadriz/friendly-snippets' },
-    version = '1.*',
+  { 'saghen/blink.cmp', dependencies = {
+    'rafamadriz/friendly-snippets',
+    { "samiulsami/cmp-go-deep", dependencies = { "kkharji/sqlite.lua" } },
+    { "saghen/blink.compat" },
+
+  }, version = '1.*', },
+  { "L3MON4D3/LuaSnip", build = "make install_jsregexp",
+    -- follow latest release.
+    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
   },
+	{ 'samiulsami/cmp-go-deep', dependencies = { 'kkharji/sqlite.lua', 'saghen/blink.compat' }, },
+
+  { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" }, opts = {}, }
 }

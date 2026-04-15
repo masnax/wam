@@ -1,5 +1,12 @@
-local lang_ts = { "go", "lua", "bash", "vim", "regex", "markdown", "markdown_inline", "git_config", "comment" }
+local lang_ts = { "go", "lua", "bash", "vim", "regex", "markdown", "markdown_inline", "git_config", "comment", "typescript", "javascript" }
 local ts = require'nvim-treesitter'
+
+
+require('nvim-treesitter').setup {
+  -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
+  install_dir = vim.fn.stdpath('data') .. '/site'
+}
+
 ts.install(lang_ts)
 
 -- highlights:
@@ -14,6 +21,12 @@ vim.wo[0][0].foldmethod = 'expr'
 
 -- textsubjects:
 -- not yet supported
+
+vim.filetype.add({
+  extension = {
+    gotmpl = "gotmpl",
+  }
+})
 
 
 vim.api.nvim_set_hl(0, 'RainbowDelimiterRed', {fg = "#50505f"})
@@ -32,7 +45,8 @@ local lsp_types = require('blink.cmp.types').CompletionItemKind
 local src_filter = 0
 local lsp_srcs = {}
 
-local cmp_providers = { 'lsp', 'path', 'snippets', 'buffer' }
+local cmp_providers = { 'lsp', 'path', 'snippets', 'buffer', }
+--cmp_providers = { 'go_deep' }
 require('blink.cmp').setup({
   completion = {
     list = { selection = { preselect = true, auto_insert = false } },
@@ -93,6 +107,7 @@ require('blink.cmp').setup({
     default = cmp_providers,
     providers = {
       lsp = {
+        max_items = 500,
         transform_items = function(cmp, items)
           local subset = vim.tbl_filter(function(item)
             return src_filter > 0 and item.kind == lsp_srcs[src_filter]
@@ -105,10 +120,30 @@ require('blink.cmp').setup({
           return subset
         end
       },
+      go_deep = {
+        name = "go_deep",
+        module = "blink.compat.source",
+        min_keyword_length = 2,
+        max_items = 5,
+        ---@module "cmp_go_deep"
+        ---@type cmp_go_deep.Options
+        opts = { filetypes = { "go" }},
+      },
     }
   },
   --snippets = { preset = 'default' | 'luasnip' | 'mini_snippets' | 'vsnip' },
+  snippets = {preset = 'luasnip'},
   signature = { enabled = true },
+  fuzzy = {
+    implementation = "prefer_rust_with_warning",
+    use_proximity = true,
+    sorts = {
+      'exact',
+      -- defaults
+      'score',
+      'sort_text',
+    },
+  }
 })
 
 -- Setup lspconfig.
@@ -125,7 +160,7 @@ for _, lsp in pairs(servers) do
     on_attach = function(client, bufnr)
       local lsp_opts = { noremap=true, silent=true }
       vim.api.nvim_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_prev({float=false})<CR>', lsp_opts)
-      vim.api.nvim_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.goto_next({float=false})<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.jump({count=1, float=false})<CR>', lsp_opts)
       vim.api.nvim_set_keymap('n', 'E', '<cmd>lua vim.diagnostic.open_float()<CR>', lsp_opts)
       vim.api.nvim_set_keymap('n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', lsp_opts)
       vim.api.nvim_set_keymap('n', 'C', '<cmd>lua vim.lsp.buf.code_action()<CR>', lsp_opts)
@@ -155,8 +190,9 @@ for _, lsp in pairs(servers) do
           analyses = { unusedparams = false, },
           codelenses = { gc_details = false, },
           staticcheck = false,
-          completeUnimported = false,
           usePlaceholders = false,
+           -- completeUnimported = false, -- I think this was removed?
+           -- completionBudget = "300ms",
         }
       }
     }

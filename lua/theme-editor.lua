@@ -106,7 +106,7 @@ local function open_popup()
   api.nvim_buf_set_option(bufnr, "modifiable", true)
   api.nvim_buf_set_option(bufnr, "filetype", "markdown")
   api.nvim_buf_set_option(bufnr, 'completeopt', 'longest,noinsert')
-  require'cmp'.setup.buffer({enabled = false})
+  vim.b.completion = false
 
   local function close_preview()
     local new_lines = api.nvim_buf_get_lines(bufnr, 0, -1, false)
@@ -149,10 +149,6 @@ local function open_popup()
     silent = true,
     callback = function() api.nvim_win_close(win_id, true) end
   })
-
-
-
-
 end
 
 vim.keymap.set('n', "hh", open_popup, {noremap = true, silent = true})

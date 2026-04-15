@@ -2,6 +2,9 @@ require('go').setup({
   gofmt = 'gofumpt',
   goimports = 'goimports',
   diagnostic = false,
+  tag_options = '',
+  tag_transform = 'snakecase',
+  luasnip = true,
 
 --  max_line_len = 10000,
 })
