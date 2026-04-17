@@ -158,6 +158,10 @@ for _, lsp in pairs(servers) do
   vim.lsp.config(lsp, {
     capabilities = capabilities,
     on_attach = function(client, bufnr)
+      if lsp == "gopls" then
+        vim.lsp.inlay_hint.enable(vim.bo[bufnr].filetype ~= "gomod", {bufnr = bufnr})
+      end
+
       local lsp_opts = { noremap=true, silent=true }
       vim.api.nvim_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_prev({float=false})<CR>', lsp_opts)
       vim.api.nvim_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.jump({count=1, float=false})<CR>', lsp_opts)

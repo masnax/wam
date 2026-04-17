@@ -1,5 +1,7 @@
 local ts = require('telescope.builtin')
-local make_entry = require "telescope.make_entry"
+local make_entry = require("telescope.make_entry")
+local ts_utils = require('telescope.utils')
+
 local function nnoremap(key, func)
   vim.keymap.set('n', key, func, {noremap = true, silent = true})
 end
@@ -25,15 +27,14 @@ nnoremap('<Space><Space>', function()
   ts.lsp_references(opts)
 end)
 
-nnoremap('//', function() ts.live_grep({grep_open_files=true, wrap_results=true}) end)
---nnoremap('\\', function() ts.live_grep({wrap_results=true}) end)
-nnoremap('\\\\', function()
+nnoremap(';;', function() ts.live_grep({cwd=ts_utils.buffer_dir(), wrap_results=true}) end)
+nnoremap('||', function()
   local opts = {hidden=true, default_text = ":file:"}
   opts.entry_maker = test_mock_tags(make_entry.gen_from_file(opts), 1)
   ts.find_files(opts)
 end)
 
-nnoremap(';;', function()
+nnoremap('\\\\', function()
   local opts = { path='%:p:h', _entry_cache = {}, default_text = ":file:", hidden = {file_browser = true, folder_browser = true}, follow_symlinks = true }
   opts.entry_maker = function(local_opts)
     local fb_make_entry = require "telescope._extensions.file_browser.make_entry"

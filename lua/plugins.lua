@@ -64,5 +64,24 @@ return {
   },
 	{ 'samiulsami/cmp-go-deep', dependencies = { 'kkharji/sqlite.lua', 'saghen/blink.compat' }, },
 
-  { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" }, opts = {}, }
+  { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" }, opts = {
+    on_attach = function()
+      local lsp_opts = { noremap=true, silent=true }
+      vim.api.nvim_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_prev({float=false})<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.jump({count=1, float=false})<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', 'E', '<cmd>lua vim.diagnostic.open_float()<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', '?', '<cmd>lua vim.lsp.buf.hover()<CR>', lsp_opts)
+      vim.api.nvim_set_keymap('n', 'C', '<cmd>lua vim.lsp.buf.code_action()<CR>', lsp_opts)
+      vim.api.nvim_exec(
+        [[
+        augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+        augroup END
+        ]],
+        false
+      )
+    end,
+  }, }
 }
