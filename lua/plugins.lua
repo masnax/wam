@@ -10,6 +10,7 @@ return {
   }},
 
   {'nvim-telescope/telescope-file-browser.nvim'},
+  { 'esmuellert/codediff.nvim', cmd = "CodeDiff", },
 
   { 'ray-x/lsp_signature.nvim' },
   { 'ray-x/go.nvim' },

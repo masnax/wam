@@ -78,6 +78,8 @@ end
 local config = require("ts.config")
 local def_impl = function(opts)
   opts = opts or {}
+  opts.bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
+  opts.winnr = opts.winnr or vim.api.nvim_get_current_win()
   local store = get_locations({}, "textDocument/definition", opts)
   store = get_locations(store, "textDocument/implementation", opts)
 

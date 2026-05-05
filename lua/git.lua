@@ -49,6 +49,17 @@ require'gitsigns'.setup {
   end
 }
 
+require'codediff'.setup({
+  highlights = {
+    line_insert = "#252530",
+    line_delete = "#2b0a18",
+
+    char_insert = nil,
+    char_delete = nil,
+    char_brightness = nil,
+  },
+})
+
 
   vim.api.nvim_set_hl(0, 'GitSignsAdd', { link = 'GitSignsAdd' })
   vim.api.nvim_set_hl(0, 'GitSignsAddLn', { link = 'GitSignsAddLn' })
