@@ -353,4 +353,15 @@ require('blink.pairs').setup({
   },
 })
 
+
+-- Disable autopairs during visual block insert.
+vim.keymap.set("x", "I", function()
+  vim.b.pairs = vim.fn.mode() ~= "\22"
+  return "I"
+end, { expr = true })
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+  callback = function() vim.b.pairs = true end,
+})
+
 require("inc_rename").setup()
