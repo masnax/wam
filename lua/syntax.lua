@@ -106,8 +106,12 @@ require('blink.cmp').setup({
   sources = {
     default = cmp_providers,
     providers = {
+      snippets = {
+        score_offset = -9999,
+      },
       lsp = {
         max_items = 500,
+        score_offset = 9999,
         transform_items = function(cmp, items)
           local subset = vim.tbl_filter(function(item)
             return src_filter > 0 and item.kind == lsp_srcs[src_filter]
@@ -139,9 +143,13 @@ require('blink.cmp').setup({
     use_proximity = true,
     sorts = {
       'exact',
-      -- defaults
-      'score',
+      function(a, b)
+        local a_snippet = a.source_id == "snippets"
+        local b_snippet = b.source_id == "snippets"
+        if a_snippet ~= b_snippet then return b_snippet end
+      end,
       'sort_text',
+      'score',
     },
   }
 })
@@ -159,6 +167,7 @@ for _, lsp in pairs(servers) do
     capabilities = capabilities,
     on_attach = function(client, bufnr)
       if lsp == "gopls" then
+        vim.opt_local.expandtab = true
         vim.lsp.inlay_hint.enable(vim.bo[bufnr].filetype ~= "gomod", {bufnr = bufnr})
       end
 
