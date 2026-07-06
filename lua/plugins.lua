@@ -24,7 +24,6 @@ return {
   { "catppuccin/nvim", name = "catppuccin" },
   { 'kevinhwang91/nvim-ufo', dependencies = { 'kevinhwang91/promise-async' }},
   { 'jghauser/fold-cycle.nvim' },
-  { 'saghen/blink.pairs', version = '*', dependencies = 'saghen/blink.download' },
   { 'SmiteshP/nvim-navic' },
   { 'HiPhish/rainbow-delimiters.nvim' },
   { 'lewis6991/gitsigns.nvim' },
@@ -53,12 +52,14 @@ return {
     end
   },
 
-  { 'saghen/blink.cmp', dependencies = {
-    'rafamadriz/friendly-snippets',
-    { "samiulsami/cmp-go-deep", dependencies = { "kkharji/sqlite.lua" } },
-    { "saghen/blink.compat" },
+  { 'saghen/blink.pairs', version = '*', dependencies = 'saghen/blink.lib', build = function() require('blink.pairs').build():pwait(60000) end, },
+  { 'saghen/blink.cmp',
+    dependencies = { 'saghen/blink.lib', 'rafamadriz/friendly-snippets' },
+    build = function()
+      require('blink.cmp').build():pwait()
+    end,
+  },
 
-  }, version = '1.*', },
   { "L3MON4D3/LuaSnip", build = "make install_jsregexp",
     -- follow latest release.
     version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)

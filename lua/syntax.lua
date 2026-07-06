@@ -208,7 +208,15 @@ for _, lsp in pairs(servers) do
            -- completionBudget = "300ms",
         }
       }
-    }
+    },
+    settings = {
+      Lua = {
+        hint = {
+          enable = true,
+          arrayIndex = "Disable",  -- "Enable" | "Auto" | "Disable"
+        },
+      },
+    },
   })
 
   vim.lsp.enable(lsp)
@@ -281,12 +289,16 @@ vim.diagnostic.config({
 })
 
 vim.cmd([[
-hi IblScope  guifg=#40304a
+hi IblScope  guifg=#70708a
 hi IblIndent guifg=#1c1c2d
 ]])
 
 require'ibl'.setup({
-  scope = { char = "┃", highlight = {"IblScope"}, show_start = true, show_end = true},
+  scope = { char = "┃", highlight = {"IblScope"}, show_start = true, show_end = true, include = {
+    node_type = {
+      ["*"] = { "table_constructor", "arguments", "parenthesized_expression"},
+    },
+  } },
   indent = { char = "▏", highlight = {"IblIndent"}},
   whitespace = {},
 })

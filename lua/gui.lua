@@ -1,6 +1,6 @@
 require'notify'.setup {
   fps = 600,
-  timeout = 1800,
+  timeout = 2500,
   top_down = true,
   render = "minimal",
 --  stages = "slide",
