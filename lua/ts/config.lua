@@ -195,7 +195,25 @@ require('telescope').setup({
   },
   pickers = {
     find_files = { mappings = keymaps, sorter = tag_sorter },
-    live_grep = { mappings = keymaps },
+    live_grep = {
+      mappings = (function()
+        local maps = vim.deepcopy(keymaps)
+        maps["i"]["<C-c>"] = function(b)
+            local picker = action_state.get_current_picker(b)
+            local prompt = picker:_get_prompt()
+            local cwd = picker.cwd or vim.loop.cwd()
+            vim.ui.input({ prompt = "cwd: ", default=  cwd, completion = "dir", }, function(new_cwd)
+              if not new_cwd or new_cwd == "" or new_cwd == cwd then
+                return
+              end
+
+              actions.close(b)
+              ts.live_grep({cwd=new_cwd, default_text=prompt, wrap_results=true})
+            end)
+        end
+        return maps
+      end)(),
+    },
     lsp_type_definitions = { mappings = keymaps },
     lsp_references = { mappings = keymaps, sorter = tag_sorter },
     diagnostics = { mappings = keymaps },
