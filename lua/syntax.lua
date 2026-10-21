@@ -242,7 +242,7 @@ for txt, info in pairs(dicons) do
   local sign = "DiagnosticSign"..txt
 
   vim.api.nvim_set_hl(0, line, {fg = "#000000", bg = info.color, bold = true})
-  vim.api.nvim_set_hl(0, sign, {fg = info.color, bg = none})
+  vim.api.nvim_set_hl(0, sign, {fg = info.color, bg = "none"})
 end
 
 vim.diagnostic.config({
@@ -296,7 +296,7 @@ hi IblIndent guifg=#1c1c2d
 require'ibl'.setup({
   scope = { char = "┃", highlight = {"IblScope"}, show_start = true, show_end = true, include = {
     node_type = {
-      ["*"] = { "table_constructor", "arguments", "parenthesized_expression"},
+      ["*"] = { "table_constructor", "arguments", "parenthesized_expression", "ui_object_initializer", "initializer"},
     },
   } },
   indent = { char = "▏", highlight = {"IblIndent"}},

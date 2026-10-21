@@ -7,20 +7,24 @@ local options = {
   lsp_severity = vim.diagnostic.severity,
 }
 
+local global_main_icon = "  "
+local global_vi_mode_icon = " "
+local global_position_icon = " "
+
 options.icon_styles = {
    default = {
       left = "",
       right = " ",
-      main_icon = "  ",
-      vi_mode_icon = " ",
-      position_icon = " ",
+      main_icon = global_main_icon,
+      vi_mode_icon = global_vi_mode_icon,
+      position_icon = global_position_icon,
    },
    arrow = {
       left = "",
       right = "",
-      main_icon = "  ",
-      vi_mode_icon = " ",
-      position_icon = " ",
+      main_icon = global_main_icon,
+      vi_mode_icon = global_vi_mode_icon,
+      position_icon = global_position_icon,
    },
 
    block = {
@@ -28,23 +32,23 @@ options.icon_styles = {
       right = " ",
       main_icon = "   ",
       vi_mode_icon = "  ",
-      position_icon = "  ",
+      position_icon = global_position_icon,
    },
 
    round = {
       left = "",
       right = "",
-      main_icon = "  ",
-      vi_mode_icon = " ",
-      position_icon = " ",
+      main_icon = global_main_icon,
+      vi_mode_icon = global_vi_mode_icon,
+      position_icon = global_position_icon,
    },
 
    slant = {
       left = " ",
       right = " ",
-      main_icon = "  ",
-      vi_mode_icon = " ",
-      position_icon = " ",
+      main_icon = global_main_icon,
+      vi_mode_icon = global_vi_mode_icon,
+      position_icon = global_position_icon,
    },
 }
 
