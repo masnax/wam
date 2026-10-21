@@ -35,9 +35,12 @@ return {
   { 'sindrets/diffview.nvim' },
   { 'folke/noice.nvim', dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" } },
 
-  { 'CosmicNvim/cosmic-ui',
-    dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
-    config = function() require('cosmic-ui').setup() end
+  {
+    "CosmicNvim/cosmic-ui",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    tag = "0.3.0",
   },
 
   --{ "sphamba/smear-cursor.nvim", opts = { cursor_color = "#d3cdc3"} },
